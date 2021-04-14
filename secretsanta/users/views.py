@@ -10,12 +10,10 @@ def register(request):
 			form.save()
 			username = form.cleaned_data.get('username')
 
-			# Flash success message
-			# messages.success(request, f'Account created for {username}!')
 			messages.success(request, 'Your account as been created, you may now log in')
 
-			# Redirect user to homepage
-			return redirect('login')
+			#return redirect('login')
+			return redirect('/')
 	else:
 		# Else create an empty form
 		form = UserRegisterForm()
