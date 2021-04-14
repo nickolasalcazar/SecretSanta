@@ -31,7 +31,7 @@ ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
-
+# Remember to always add new apps here
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'game.apps.GameConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
