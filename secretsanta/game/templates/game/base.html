@@ -5,7 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{% static 'game/main.css' %}">
-    <title>Home</title>
+    
+    {% if title %}
+        <title>Secret Santa - {{ title }}</title>
+    {% else %}
+        <title>Secret Santa</title>
+    {% endif %}
 </head>
 <body>
     {% block content %}
@@ -14,9 +19,14 @@
     <nav>
         <h3>Navigation</h3>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">Sign In</a></li>
-            <li><a href="#">About</a></li>
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="#">Create Game</a>
+                <a class="nav-item nav-link" href="#">Profile</a>
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              {% else  %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Sign Up</a>
+              {% endif %}
         </ul>
     </nav>
 </body>

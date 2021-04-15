@@ -1,0 +1,25 @@
+{% extends "game/base.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <!-- Note that we do not have to pass in the user as a context variable -->
+            <!-- It is a built-in feature within Django to automatically include a -->
+            <!-- user that is logged in -->
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+
+      <!-- enctype="multipart/form-data" is required for forms containing more than one form -->
+      <form method="POST" enctype="multipart/form-data">
+        <h3>Profile Info</h3>
+          {% csrf_token %} <!-- required for forms -->
+          {{ u_form.as_p }} <!-- importing UserUpdateForm -->
+
+          {{ p_form.as_p }} <!-- importing ProfileUpdateForm -->
+        <button type="submit">Update</button>
+      </form>
+    </div>
+{% endblock content %}
