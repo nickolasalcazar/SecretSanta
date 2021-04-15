@@ -11,8 +11,8 @@ from django.contrib.auth.forms import UserCreationForm
 class UserRegisterForm(UserCreationForm):
     # Our own extra fields go here
     email = forms.EmailField()
-    # first_name = forms.CharField()
-    # last_name = forms.CharField()
+    first_name = forms.CharField()
+    last_name = forms.CharField()
 
     # This inner class lists all of the fields,
     # inlcuding the fields inherited from UserCreationForm
@@ -23,7 +23,7 @@ class UserRegisterForm(UserCreationForm):
         # The order in which the fields are listed in 'fields'
         # will affect the order they appear in the form.
         fields = ['username', 'email',
-                    #'first_name', 'last_name', 
+                    'first_name', 'last_name', 
                     'password1', 'password2']
 
         
