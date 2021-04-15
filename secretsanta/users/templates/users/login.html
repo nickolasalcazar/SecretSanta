@@ -1,0 +1,15 @@
+{% extends "game/base.html" %}
+{% block content %}
+    <h1>Log In</h1>
+    <div>
+        <!-- The "Crispy Forms" framework can be used to style this form along with Bootstrap -->
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign In</button>
+        </form>
+        <div>
+            Need an account? <a href="{% url 'register' %}">Sign Up</a>
+        </div>
+    </div>
+{% endblock content %}
