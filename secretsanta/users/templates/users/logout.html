@@ -1,0 +1,9 @@
+{% extends "game/base.html" %}
+{% block content %}
+    <h1>You have been logged out</h1>
+    <div>
+        <div>
+            <a href="{% url 'login' %}">Log in again</a>
+        </div>
+    </div>
+{% endblock content %}
