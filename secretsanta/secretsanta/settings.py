@@ -29,7 +29,6 @@ DEBUG = decouple_config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
 
-
 # Application definition
 # Remember to always add new apps here
 INSTALLED_APPS = [
@@ -121,6 +120,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#LOGIN_REDIRECT_URL = 'url'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
