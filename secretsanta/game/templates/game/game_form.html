@@ -1,0 +1,11 @@
+{% extends "game/base.html" %}
+{% block content %}
+    <h1>Create a game</h1>
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+{% endblock content %}
