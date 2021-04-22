@@ -5,7 +5,7 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
 '''
-    
+    Registration page
 '''
 def register(request):
     # If user is already logged in, redirect to homepage
@@ -24,6 +24,9 @@ def register(request):
 
     return render(request, 'users/register.html', {'form': form})
 
+'''
+    View personal profile page
+'''
 @login_required
 def profile(request):
     # If we get a POST request, create forms
