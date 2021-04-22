@@ -4,7 +4,13 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 from django.contrib.auth.decorators import login_required
 
+'''
+    
+'''
 def register(request):
+    # If user is already logged in, redirect to homepage
+    if request.user.is_authenticated: return redirect('/')
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
