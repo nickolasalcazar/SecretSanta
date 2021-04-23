@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 
 from django.contrib.auth.mixins import (
 	LoginRequiredMixin,
@@ -30,6 +31,13 @@ def createGame(request):
 	if request.method == 'POST':
 		game_form = CreateGameForm(request.POST)
 		#player_form = CreatePlayerForm
+
+		# if game_form.is_valid() and player_form.is_valid():
+		if game_form.is_valid():
+			game_form.save()
+			#player_form.save()
+
+			messages.success(request, 'New game created.')
 	else:
 		game_form = CreateGameForm()
 
