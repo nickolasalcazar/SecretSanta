@@ -1,9 +1,7 @@
 from django.urls import path
 from . import views
 
-from .views import (
-	GameCreateView,
-)
+# from .views import GameCreateView
 
 urlpatterns = [
     path('', views.home, name='game-home'),
