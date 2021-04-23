@@ -34,6 +34,8 @@ def createGame(request):
 
 		# if game_form.is_valid() and player_form.is_valid():
 		if game_form.is_valid():
+			game_form.instance.host = request.user
+
 			game_form.save()
 			#player_form.save()
 
