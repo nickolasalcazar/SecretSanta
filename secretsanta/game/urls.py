@@ -8,6 +8,10 @@ from .views import (
 urlpatterns = [
     path('', views.home, name='game-home'),
 
-    path('create/', GameCreateView.as_view(), name='game-create'),
+    # Class-based view implementation
+    #path('create/', GameCreateView.as_view(), name='game-create'),
+
+    # Function based view implementation
+    path('create/', views.createGame, name='game-create')
 
 ]

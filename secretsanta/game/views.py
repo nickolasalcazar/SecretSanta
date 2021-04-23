@@ -5,9 +5,13 @@ from django.contrib.auth.mixins import (
 	UserPassesTestMixin
 )
 
-from django.views.generic import (
-	CreateView
-)
+from django.contrib.auth.decorators import login_required
+
+from .forms import CreateGameForm, CreatePlayerForm
+
+# The following import will no longer be needed after CreateGameForm and CreatePlayerForm
+# classes are implemented.
+from django.views.generic import CreateView
 
 from .models import Game, Player
 
@@ -17,6 +21,34 @@ from .models import Game, Player
 def home(request):
     context = { }
     return render(request, 'game/home.html', context)
+
+'''
+	Handles creation of new Game object.
+'''
+@login_required
+def createGame(request):
+	if request.method == 'POST':
+		game_form = CreateGameForm(request.POST)
+		#player_form = CreatePlayerForm
+	else:
+		game_form = CreateGameForm()
+
+	context = {
+		'game_form': game_form,
+	}
+
+	return render(request, 'game/game_form.html', context)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

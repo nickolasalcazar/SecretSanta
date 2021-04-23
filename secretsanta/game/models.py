@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 '''
 class Game(models.Model):
 	host = models.ForeignKey(User, on_delete=models.CASCADE)
-	date = models.DateField()	
+	title = models.CharField(max_length=25, default="Untitled Game")
+	#date = models.DateField()	
 
 
 '''
@@ -14,5 +15,5 @@ class Game(models.Model):
 '''
 class Player(models.Model):
 	game = models.ForeignKey(Game, on_delete=models.CASCADE)
-	first_name = models.CharField(max_length=25)
-	last_name = models.CharField(max_length=25)
+	first_name = models.CharField(max_length=25, default="First name")
+	last_name = models.CharField(max_length=25, default="Last name")
