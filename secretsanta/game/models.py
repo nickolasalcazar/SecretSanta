@@ -8,6 +8,9 @@ class Game(models.Model):
 	host = models.ForeignKey(User, on_delete=models.CASCADE)
 	title = models.CharField(max_length=25, default="Untitled Game")
 
+	def __str__(self):
+		return f'Game "{self.title}"'
+
 '''
 	The Game object is a foreign key of Player objects.
 '''
@@ -16,3 +19,6 @@ class Player(models.Model):
 	first_name = models.CharField(max_length=25, default="First name")
 	last_name = models.CharField(max_length=25, default="Last name")
 	#last_name = models.CharField(max_length=25, blank=True)
+
+	def __str__(self):
+		return f'Player {self.first_name} {self.last_name}'
