@@ -18,4 +18,4 @@ class CreatePlayerForm(forms.ModelForm):
         model = Player
         fields = ['first_name', 'last_name']
 
-CreatePlayerFormset = formset_factory(CreatePlayerForm, extra=1)
+CreatePlayerFormset = formset_factory(CreatePlayerForm, extra=2)

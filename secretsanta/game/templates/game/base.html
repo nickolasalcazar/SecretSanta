@@ -21,7 +21,7 @@
         <ul>
             {% if user.is_authenticated %}
                 <a class="nav-item nav-link" href="{% url 'game-home' %}">Home</a>
-                <a class="nav-item nav-link" href="#">Create Game</a>
+                <a class="nav-item nav-link" href="{% url 'game-create' %}">Create Game</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
               {% else  %}
