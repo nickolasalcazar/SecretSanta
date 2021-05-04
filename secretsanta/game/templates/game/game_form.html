@@ -1,4 +1,5 @@
 {% extends "game/base.html" %}
+{% load static %}
 {% block content %}
     <h1>Create a game</h1>
     <div>
@@ -10,10 +11,11 @@
                 <div>
                     First name: {{ form.first_name }}
                     Last name: {{ form.last_name }}
-                    <button>+</button>
+                    <button add-form-row>+</button>
                 </div>
             {% endfor %}
             <button type="submit">Create Game</button>
         </form>
     </div>
+    <script src="{% static 'game/game_form.js' %}"></script>
 {% endblock content %}
