@@ -5,7 +5,14 @@
         <form method="POST">
             {% csrf_token %}
             {{ game_form.as_p }}
-            {{ player_formset.as_p }}
+            {{ player_formset.management_form }}
+            {% for form in player_formset %}
+                <div>
+                    First name: {{ form.first_name }}
+                    Last name: {{ form.last_name }}
+                    <button>+</button>
+                </div>
+            {% endfor %}
             <button type="submit">Create Game</button>
         </form>
     </div>
