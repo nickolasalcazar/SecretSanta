@@ -9,9 +9,11 @@
             {{ player_formset.management_form }}
             {% for form in player_formset %}
                 <div>
-                    First name: {{ form.first_name }}
-                    Last name: {{ form.last_name }}
-                    <button add-form-row>+</button>
+                    <div class='player_form'>
+                        First name: {{ form.first_name }}
+                        Last name: {{ form.last_name }}
+                        <button class='player-btn'>+</button>
+                    </div>
                 </div>
             {% endfor %}
             <button type="submit">Create Game</button>
