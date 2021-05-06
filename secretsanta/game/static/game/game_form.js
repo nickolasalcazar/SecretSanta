@@ -7,8 +7,6 @@ const add_player_btn = document.querySelector('#add-player-btn');
 const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
 const game_form = document.querySelector('#game-form');
 
-
-
 const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
 let formCount = player_form_rows.length - 1;
 
