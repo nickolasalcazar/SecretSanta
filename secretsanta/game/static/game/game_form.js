@@ -4,8 +4,9 @@ console.log('game/game_form.js');
 const add_player_btn = document.querySelector('#add-player-btn');
 //rem_player_btn = document.getElementById('add-player-btn');
 
-const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
 const game_form = document.querySelector('#game-form');
+const player_form = document.querySelector('#add-player-form');
+const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
 
 const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
 let formCount = player_form_rows.length - 1;
@@ -14,6 +15,10 @@ let formCount = player_form_rows.length - 1;
 add_player_btn.addEventListener('click', function(event) {
     event.preventDefault();
 
+     if (formCount == 31) {
+        alert("Maximum number of players is 32.");
+        return;
+    }
     // Clone form
     const newPlayerForm = player_form_rows[0].cloneNode(true);
 
@@ -27,8 +32,11 @@ add_player_btn.addEventListener('click', function(event) {
     newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `form-${formCount}-`);
     
     // Insert element into list
-    game_form.insertBefore(newPlayerForm, add_player_btn);
+    //game_form.insertBefore(newPlayerForm, add_player_btn);
+    player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
+
+    console.log(formCount)
 });
 
 // Event bubbling. If any child element of game_form is clicked,
@@ -36,11 +44,20 @@ add_player_btn.addEventListener('click', function(event) {
 // The expression event.target refers to the element the event fired on.
 game_form.addEventListener('click', function(event) {
     if (event.target.classList.contains('rmv-player-btn')) {
-        event.preventDefault();
-        event.target.parentElement.remove();
-        formCount--;
-        totalForms.setAttribute('value', `${formCount + 1}`);
-        updateForms();
+
+        console.log(formCount)
+
+        if (formCount == 3) {
+            alert("Minimum number of players is 4.");
+        } else {
+            console.log('Node is deleted.')
+
+            event.preventDefault();
+            event.target.parentElement.remove();
+            formCount--;
+            totalForms.setAttribute('value', `${formCount + 1}`);
+            updateForms();
+        }
     }
 });
 
