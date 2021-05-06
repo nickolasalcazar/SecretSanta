@@ -3,20 +3,29 @@
 {% block content %}
     <h1>Create a game</h1>
     <div>
-        <form method="POST">
+        <form method='POST'>
+            <div class='add-player-row'>
+                First name: {{ form.first_name }}
+                Last name: {{ form.last_name }}
+                <button class="rmv-player-btn">Remove player</button>
+            </div>
+
+
+
+
             {% csrf_token %}
             {{ game_form.as_p }}
             {{ player_formset.management_form }}
             {% for form in player_formset %}
-                <div>
-                    <div class='player_form'>
+                <div id='add-player-form'>
+                    <div class='add-player-row'>
                         First name: {{ form.first_name }}
                         Last name: {{ form.last_name }}
-                        <button class='player-btn'>+</button>
                     </div>
                 </div>
             {% endfor %}
-            <button type="submit">Create Game</button>
+            <button id='add-player-btn'>Add player</button>
+            <button type='submit'>Create Game</button>
         </form>
     </div>
     <script src="{% static 'game/game_form.js' %}"></script>
