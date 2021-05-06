@@ -13,9 +13,7 @@ from .forms import (
     CreatePlayerFormset
 )
 
-# The following import will no longer be needed after CreateGameForm and CreatePlayerForm
-# classes are implemented.
-from django.views.generic import CreateView
+from django.views.generic import ListView
 
 from .models import Game, Player
 
@@ -70,19 +68,12 @@ def createGame(request):
 
     return render(request, 'game/game_form.html', context)
 
+# Note: implement login required
+class GameListView(ListView):
+    model = Game
 
-'''
-class GameCreateView(LoginRequiredMixin, CreateView):
-    model = Game # The model that will be created
-    fields = ['date']
-    
-    ''
-        Overriding the form_valid() method.
-        This function sets the author of the post to the user who posts it.
-        This must be specified, otherwise the author of the post will be NULL,
-        and that will throw an error.
-    ''
-    def form_valid(self, form):
-        form.instance.author = self.request.user # Set author = user
-        return super().form_valid(form)
-'''
+    template_name = 'game/view_games.html'
+
+    context_object_name = 'games'
+
+

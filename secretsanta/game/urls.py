@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-# from .views import GameCreateView
+from .views import GameListView
 
 urlpatterns = [
     path('', views.home, name='game-home'),
@@ -10,6 +10,8 @@ urlpatterns = [
     #path('create/', GameCreateView.as_view(), name='game-create'),
 
     # Function based view implementation
-    path('create/', views.createGame, name='game-create')
+    path('create/', views.createGame, name='game-create'),
+
+    path('game/view-games/', GameListView.as_view(), name='view-games'),
 
 ]
