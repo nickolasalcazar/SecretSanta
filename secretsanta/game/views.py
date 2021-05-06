@@ -13,7 +13,10 @@ from .forms import (
     CreatePlayerFormset
 )
 
-from django.views.generic import ListView
+from django.views.generic import (
+    ListView,
+    DetailView
+)
 
 from .models import Game, Player
 
@@ -68,12 +71,15 @@ def createGame(request):
 
     return render(request, 'game/game_form.html', context)
 
-# Note: implement login required
+# Note: implement login-required
 class GameListView(ListView):
     model = Game
 
     template_name = 'game/view_games.html'
 
     context_object_name = 'games'
+
+class GameDetailView(DetailView):
+    model = Game
 
 

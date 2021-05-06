@@ -3,7 +3,9 @@
 	<h1>Current Games</h1>
     <div>
     	{% for game in games %}
-    		<p>{{ game.title }}</p>
+    		<p>
+    			<a href="{% url 'game-detail' game.id %}">{{ game.title }}</a>
+    		</p>
     	{% endfor %}
     </div>
 {% endblock content %}
