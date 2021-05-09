@@ -7,7 +7,13 @@ const add_player_btn = document.querySelector('#add-player-btn');
 const game_form = document.querySelector('#game-form');
 const player_form = document.querySelector('#add-player-form');
 const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
-const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+
+
+let totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+if (!totalForms) {
+    console.log('!totalForms')
+    totalForms = document.querySelector("#id_player_set-TOTAL_FORMS");
+}
 
 let formCount = player_form_rows.length - 1;
 
@@ -23,21 +29,30 @@ add_player_btn.addEventListener('click', function(event) {
     const newPlayerForm = player_form_rows[0].cloneNode(true);
 
     // Reset first name and last name fields to empty
-    newPlayerForm.querySelectorAll('input')[0].value = '';
-    newPlayerForm.querySelectorAll('input')[1].value = '';
+
+    newPlayerForm.querySelectorAll('input')[0].setAttribute('value', '');
+    newPlayerForm.querySelectorAll('input')[1].setAttribute('value', '');
+
+    //newPlayerForm.querySelectorAll('input')[0].value = '';
+    //newPlayerForm.querySelectorAll('input')[1].value = '';
 
     // Update management_form to handle new forms
     const formRegex = RegExp(`form-(\\d){1}-`, 'g');
     formCount++;
-    newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `form-${formCount}-`);
-    
-    // Insert element into list
-    console.log(totalForms);
-    console.log('Working?')
 
+    newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `form-${formCount}-`);
+
+    //newPlayerForm.querySelectorAll('input')[0].value = '';
+    //newPlayerForm.querySelectorAll('input')[1].value = '';
+    
+    console.log(newPlayerForm)
+
+    // Insert element into list
     player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
 
+    
+    
     console.log(formCount)
 });
 

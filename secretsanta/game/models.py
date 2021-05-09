@@ -16,8 +16,8 @@ class Game(models.Model):
 '''
 class Player(models.Model):
 	game = models.ForeignKey(Game, on_delete=models.CASCADE)
-	first_name = models.CharField(max_length=25, default="First name")
-	last_name = models.CharField(max_length=25, default="Last name")
+	first_name = models.CharField(max_length=25, default="")
+	last_name = models.CharField(max_length=25, default="")
 	#last_name = models.CharField(max_length=25, blank=True)
 
 	def __str__(self):
