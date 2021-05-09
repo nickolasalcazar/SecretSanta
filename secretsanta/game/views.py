@@ -75,9 +75,7 @@ def createGame(request):
 # Note: implement login-required -- add parameter LoginRequiredMixin
 class GameListView(ListView):
     model = Game
-
     template_name = 'game/view_games.html'
-
     context_object_name = 'games'
 
 # Note: implement login-required -- add parameter LoginRequiredMixin
@@ -89,37 +87,40 @@ class GameDetailView(DetailView):
     Passed the game_pk of the game to be updated.
 '''
 def updateGame(request, pk):
-
     game = Game.objects.get(pk=pk)
     players = game.player_set.all()
-
-    print(game)
-    print(players)
 
     #game_form = CreateGameForm(request.POST or None)
     #game_form = CreateGameForm(instance=game)
 
-    #player_formset = CreatePlayerFormset(instance=game)
-
     PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name'))
-    
-    #player_formset = CreatePlayerFormset(instance=game)
-    #player_formset = playerInlineFormSet(request.POST, request.FILES, instance=game)
 
+    print('A')
     if request.method == 'POST':
+        print('B')
+
+        game_form = CreateGameForm(request.POST, instance=game)
         player_formset = PlayerInlineFormSet(request.POST, request.FILES, instance=game)
 
-        if game_form.is_valid() and player_formset.is_valid():
+        #if game_form.is_valid() and player_formset.is_valid():
+        if game_form.is_valid() or player_formset.is_valid():
 
+            print('C')
+            
+            '''
             for form in player_formset:
+                
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
 
                 # Save Player instance
                 if first_name:
                     Player(game=game_form.instance, first_name=first_name, last_name=last_name).save()
+            '''
 
             #player_form.save()
+            player_formset.save()
+            game_form.save()
 
             messages.success(request, 'Game updated.')
             return redirect('game-home')
