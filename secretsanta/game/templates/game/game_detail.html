@@ -2,7 +2,18 @@
 {% block content %}
 	<h1>Game Title</h1>
     <div>
-    	<p>{{ object.title }}</p>
-    	<p>{{ object.host }}</p>
+    	<h3>{{ object.title }}</h3>
+    	<p>Host: {{ object.host }}</p>
+
+    	<h4>Players</h4>
+    	<ul>
+	    	{% for player in object.player_set.all %}
+	    		<li>{{ player.first_name }}</li>
+	    	{% endfor %}
+    	</ul>
+    	<div>
+	    	<a href="{% url 'game-update' game.id %}">Edit</a>
+	    	<a href="#">Delete Game</a>
+    	</div>
     </div>
 {% endblock content %}

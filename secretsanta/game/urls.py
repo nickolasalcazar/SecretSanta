@@ -3,20 +3,26 @@ from . import views
 
 from .views import (
 	GameListView,
-	GameDetailView
+	GameDetailView,
+	#GameUpdateView
 )
 
 urlpatterns = [
     path('', views.home, name='game-home'),
 
-    # Class-based view implementation
-    #path('create/', GameCreateView.as_view(), name='game-create'),
+    #path('create/', GameCreateView.as_view(), name='game-create'),	# Class-based
+    path('create/', views.createGame, name='game-create'),			# Function-based
 
-    # Function based view implementation
-    path('create/', views.createGame, name='game-create'),
-
+    # Is the extra "game/" at the beginning of each URL redundant?
+    # Remove and test to see if it can be removed.
     path('game/view-games/', GameListView.as_view(), name='view-games'),
 
     path('game/<int:pk>/', GameDetailView.as_view(), name='game-detail'),
+    
+    # Function-based view
+    # Change 'name' to more descriptive?
+    path('game/<int:pk>/update/', views.updateGame, name='game-update'), 
+
+	#path('game/<int:pk>/update/', GameUpdateView.as_view(), name='game-update'),
 
 ]

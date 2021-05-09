@@ -7,8 +7,8 @@ const add_player_btn = document.querySelector('#add-player-btn');
 const game_form = document.querySelector('#game-form');
 const player_form = document.querySelector('#add-player-form');
 const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
-
 const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+
 let formCount = player_form_rows.length - 1;
 
 // Add player-form-row
@@ -32,7 +32,9 @@ add_player_btn.addEventListener('click', function(event) {
     newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `form-${formCount}-`);
     
     // Insert element into list
-    //game_form.insertBefore(newPlayerForm, add_player_btn);
+    console.log(totalForms);
+    console.log('Working?')
+
     player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
 
