@@ -12,6 +12,12 @@
                     <div class='add-player-row'>
                         First name: {{ form.first_name }}
                         Last name: {{ form.last_name }}
+
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+
+
                         <button class="rmv-player-btn">Remove</button>
                     </div>
                 {% endfor %}

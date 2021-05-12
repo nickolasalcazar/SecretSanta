@@ -102,24 +102,14 @@ def updateGame(request, pk):
         game_form = CreateGameForm(request.POST, instance=game)
         player_formset = PlayerInlineFormSet(request.POST, request.FILES, instance=game)
 
+        print(player_formset.errors)
+
         #if game_form.is_valid() and player_formset.is_valid():
-        if game_form.is_valid() or player_formset.is_valid():
-
+        if game_form.is_valid():
             print('C')
-            
-            '''
-            for form in player_formset:
-                
-                first_name = form.cleaned_data.get('first_name')
-                last_name = form.cleaned_data.get('last_name')
 
-                # Save Player instance
-                if first_name:
-                    Player(game=game_form.instance, first_name=first_name, last_name=last_name).save()
-            '''
-
-            #player_form.save()
             player_formset.save()
+            
             game_form.save()
 
             messages.success(request, 'Game updated.')
