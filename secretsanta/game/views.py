@@ -102,16 +102,10 @@ def updateGame(request, pk):
         game_form = CreateGameForm(request.POST, instance=game)
         player_formset = PlayerInlineFormSet(request.POST, request.FILES, instance=game)
 
-        print(player_formset.errors)
-
         #if game_form.is_valid() and player_formset.is_valid():
         if game_form.is_valid():
-            print('C')
-
             player_formset.save()
-            
             game_form.save()
-
             messages.success(request, 'Game updated.')
             return redirect('game-home')
     else:
