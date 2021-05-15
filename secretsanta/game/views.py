@@ -21,7 +21,7 @@ from django.views.generic import (
 
 from .models import Game, Player
 
-from django.forms.models import inlineformset_factory # For InlineFormSet ###############
+from django.forms.models import inlineformset_factory
 
 '''
     Function-based view for the home page of the site.
@@ -39,8 +39,6 @@ def createGame(request):
     player_formset = CreatePlayerFormset(request.POST or None)
 
     if request.method == 'POST':
-
-        # if game_form.is_valid() and player_form.is_valid():
         if game_form.is_valid() and player_formset.is_valid():
             # Assign curent user as host of Game
             game_form.instance.host = request.user
@@ -56,14 +54,10 @@ def createGame(request):
                 if first_name:
                     Player(game=game_form.instance, first_name=first_name, last_name=last_name).save()
 
-            #player_form.save()
-
             messages.success(request, 'New game created.')
-
             return redirect('game-home')
     else:
         game_form = CreateGameForm()
-        #player_formset = CreatePlayerFormset()
 
     context = {
         'game_form': game_form,
@@ -91,15 +85,9 @@ def updateGame(request, pk):
     game = Game.objects.get(pk=pk)
     players = game.player_set.all()
 
-    #game_form = CreateGameForm(request.POST or None)
-    #game_form = CreateGameForm(instance=game)
-
     PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name'))
 
-    print('A')
     if request.method == 'POST':
-        print('B')
-
         game_form = CreateGameForm(request.POST, instance=game)
         player_formset = PlayerInlineFormSet(request.POST, request.FILES, instance=game)
 
