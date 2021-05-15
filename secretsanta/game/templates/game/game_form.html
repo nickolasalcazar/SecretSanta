@@ -1,7 +1,7 @@
 {% extends "game/base.html" %}
 {% load static %}
 {% block content %}
-    <h1>Create a game</h1>
+    <h1>{{ action_title }} Game</h1>
     <div>
         <form id="game-form" method='POST'>
             {% csrf_token %}
@@ -26,7 +26,7 @@
                 {% endfor %}
             </div>
             <button id='add-player-btn'>Add player</button>
-            <button type='submit'>Create Game</button>
+            <button type='submit'>{{ action_title }} Game</button>
         </form>
     </div>
     <script src="{% static 'game/game_form.js' %}"></script>

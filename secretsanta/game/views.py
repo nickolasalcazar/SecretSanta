@@ -68,6 +68,7 @@ def createGame(request):
     context = {
         'game_form': game_form,
         'player_formset': player_formset,
+        'action_title': 'Create'
     }
 
     return render(request, 'game/game_form.html', context)
@@ -116,6 +117,7 @@ def updateGame(request, pk):
     context = {
         'game_form': game_form,
         'player_formset': player_formset,
+        'action_title': 'Update'
     }
 
     return render(request, 'game/game_form.html', context)
