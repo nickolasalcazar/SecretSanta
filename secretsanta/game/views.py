@@ -117,10 +117,31 @@ def updateGame(request, pk):
     return render(request, 'game/game_form.html', context)
 
 # Add LoginRequiredMixin
-class GameDeleteView(DeleteView):
+class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'game/confirm_delete_game.html'
     model = Game
     success_url = '/game/view-games'
+
+    '''
+        Overriding the form_valid() method.
+        This function sets the author of the post to the user who posts it.
+        This must be specified, otherwise the author of the post will be NULL,
+        and that will throw an error.
+    '''
+    def form_valid(self, form):
+        form.instance.host = self.request.user # Set author = user
+        return super().form_valid(form)
+
+    '''
+        Checks if the user who is updating the post is the author of the post.
+        (Only authors can edit their own posts. This prevents anyone from editing
+        anyone else's post.)
+
+        If a non-author attempts to edit a post, they will be returned a 403 Forbidden page.
+    '''
+    def test_func(self):
+        game = self.get_object()
+        return self.request.user == game.host
 
 
 
