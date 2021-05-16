@@ -97,10 +97,11 @@ def updateGame(request, pk):
 
             if player_formset.is_valid():
                 player_formset.save()
-                
+
             game_form.save()
             messages.success(request, 'Game updated.')
-            return redirect('game-home')
+            #return redirect('game-home')
+            return redirect('game-detail', pk)
     else:
         game_form = CreateGameForm(instance=game)
         #player_formset = CreatePlayerFormset()
