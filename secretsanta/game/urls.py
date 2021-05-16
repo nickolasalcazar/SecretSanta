@@ -4,7 +4,7 @@ from . import views
 from .views import (
 	GameListView,
 	GameDetailView,
-	#GameUpdateView
+	GameDeleteView
 )
 
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
     # Change 'name' to more descriptive?
     path('game/<int:pk>/update/', views.updateGame, name='game-update'), 
 
-	#path('game/<int:pk>/update/', GameUpdateView.as_view(), name='game-update'),
+    # Delete view
+    path('game/<int:pk>/delete/', GameDeleteView.as_view(), name='game-delete'),
 
 ]

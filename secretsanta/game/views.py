@@ -16,7 +16,8 @@ from .forms import (
 from django.views.generic import (
     ListView,
     DetailView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
 
 from .models import Game, Player
@@ -115,9 +116,11 @@ def updateGame(request, pk):
 
     return render(request, 'game/game_form.html', context)
 
-
-
-
+# Add LoginRequiredMixin
+class GameDeleteView(DeleteView):
+    template_name = 'game/confirm_delete_game.html'
+    model = Game
+    success_url = '/game/view-games'
 
 
 

@@ -13,7 +13,7 @@
     	</ul>
     	<div>
 	    	<a href="{% url 'game-update' game.id %}">Edit</a>
-	    	<a href="#">Delete Game</a>
+	    	<a href="{% url 'game-delete' object.id %}">Delete Game</a>
     	</div>
     </div>
 {% endblock content %}
