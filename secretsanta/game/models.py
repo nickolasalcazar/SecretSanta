@@ -20,6 +20,11 @@ class Player(models.Model):
 	last_name = models.CharField(max_length=25, default="")
 	#last_name = models.CharField(max_length=25, blank=True)
 
+	# The recipient of the Player, to whome the Player is assigned to gift.
+	# Can be null. Will be set to null if the recipient is deleted.
+	recipient = models.OneToOneField('self', null=True,
+					on_delete=models.SET_NULL)
+
 	def __str__(self):
 		return f'Player {self.first_name} {self.last_name}'
 
