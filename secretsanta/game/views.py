@@ -143,8 +143,14 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         game = self.get_object()
         return self.request.user == game.host
 
+'''
+    The recipients view is where the Host can
+    view the recipients of Players,
+    and notify Players via email.
 
-
+'''
+def recipientsView():
+    pass
 
 
 
