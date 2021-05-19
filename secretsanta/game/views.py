@@ -156,6 +156,7 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 '''
     Randomly assigns each Player a distinct recipient.
+    Performance is contingent on game having an even number of Players.
 '''
 def assignPairs(game):
     players = game.player_set.all()
@@ -164,21 +165,19 @@ def assignPairs(game):
     # Query Player object by id
     # Player.objects.get(pk=player.id)
 
+
     for player in players:
+
         i = random.randint(0, len(unassigned_players)-1)
 
-        print('index = ', i, ', len = ', len(unassigned_players))
-
-        #print('unassigned_players[i]', unassigned_players[i])
-        #print('\tAssigning ', player.first_name, ' to ', unassigned_players[i].first_name)
+        print('index = ', i, ', len = ', len(unassigned_players), 
+            ' | ', player.first_name, '->', unassigned_players[i].first_name)
         
         player.recipient = unassigned_players[i]
         
         unassigned_players.remove(unassigned_players[i])
+
         player.save()
-
-
-
 
 
 
