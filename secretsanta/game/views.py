@@ -162,32 +162,18 @@ def assignPairs(game):
     players = game.player_set.all()
     unassigned_players = list(game.player_set.all())
 
-    # Query Player object by id
-    # Player.objects.get(pk=player.id)
-
     # Unassign all recipients
     players.update(recipient=None)
 
     # Re-assign all recipients
     for player in players:
-
         i = random.randint(0, len(unassigned_players)-1)
 
         print('index = ', i, ', len = ', len(unassigned_players), 
             ' | ', player.first_name, '->', unassigned_players[i].first_name)
-        
-        # USE AN update METHOD HERE! Use the Django SQL interface to make
-        # this update.
-        # Otherwise Django think this is an additional recipient!
-        player.recipient = unassigned_players[i]
-        
 
-        #Player.objects.filter(id=player.id).update(recipient=unassigned_players[i])
-
-        #player.recipient.update(unassigned_players[i])
-        
+        player.recipient = unassigned_players[i]        
         unassigned_players.remove(unassigned_players[i])
-
         player.save()
 
 
