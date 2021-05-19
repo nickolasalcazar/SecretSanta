@@ -60,7 +60,7 @@ def createGame(request):
 
             messages.success(request, 'New game created.')
 
-            assignPairs(game_form.instance) ############################ TESTING
+            assignPairs(game_form.instance)
 
             return redirect('game-home')
     else:
@@ -110,7 +110,7 @@ def updateGame(request, pk):
 
             # Before submitting an update to Game the Host should be
             # notifed that updating will cause Players to be reassigned.
-            assignPairs(game_form.instance) ############################ TESTING
+            assignPairs(game_form.instance)
 
             #return redirect('game-home')
             return redirect('game-detail', pk)
@@ -157,9 +157,13 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 '''
     Randomly assigns each Player a distinct recipient.
     Performance is contingent on game having an even number of Players.
+    Throws an exception if game has odd number of Players.
 '''
 def assignPairs(game):
     players = game.player_set.all()
+
+    if players.count() % 2 != 0: raise Exception('Odd number of players.')
+
     unassigned_players = list(game.player_set.all())
 
     # Unassign all recipients
