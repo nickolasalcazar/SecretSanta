@@ -24,6 +24,8 @@ from .models import Game, Player
 
 from django.forms.models import inlineformset_factory
 
+import random
+
 '''
     Function-based view for the home page of the site.
 '''
@@ -53,9 +55,13 @@ def createGame(request):
 
                 # Save Player instance
                 if first_name:
-                    Player(game=game_form.instance, first_name=first_name, last_name=last_name).save()
+                    Player(game=game_form.instance,
+                        first_name=first_name, last_name=last_name).save()
 
             messages.success(request, 'New game created.')
+
+            assignPairs(game_form.instance) ############################ TESTING
+
             return redirect('game-home')
     else:
         game_form = CreateGameForm()
@@ -101,6 +107,11 @@ def updateGame(request, pk):
 
             game_form.save()
             messages.success(request, 'Game updated.')
+
+            # Before submitting an update to Game the Host should be
+            # notifed that updating will cause Players to be reassigned.
+            assignPairs(game_form.instance) ############################ TESTING
+
             #return redirect('game-home')
             return redirect('game-detail', pk)
     else:
@@ -144,14 +155,27 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == game.host
 
 '''
-    The recipients view is where the Host can
-    view the recipients of Players,
-    and notify Players via email.
-
+    Randomly assigns each Player a distinct recipient.
 '''
-def recipientsView():
-    pass
+def assignPairs(game):
+    players = game.player_set.all()
+    unassigned_players = list(game.player_set.all())
 
+    # Query Player object by id
+    # Player.objects.get(pk=player.id)
+
+    for player in players:
+        i = random.randint(0, len(unassigned_players)-1)
+
+        print('index = ', i, ', len = ', len(unassigned_players))
+
+        #print('unassigned_players[i]', unassigned_players[i])
+        #print('\tAssigning ', player.first_name, ' to ', unassigned_players[i].first_name)
+        
+        player.recipient = unassigned_players[i]
+        
+        unassigned_players.remove(unassigned_players[i])
+        player.save()
 
 
 

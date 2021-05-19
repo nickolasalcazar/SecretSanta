@@ -8,7 +8,7 @@
     	<h4>Players</h4>
     	<ul>
 	    	{% for player in object.player_set.all %}
-	    		<li>{{ player.first_name }}</li>
+	    		<li>{{ player.first_name }} ➨ {{ player.recipient.first_name }}</li>
 	    	{% endfor %}
     	</ul>
     	<div>
