@@ -171,7 +171,11 @@ def assignPairs(game):
 
     # Re-assign all recipients
     for player in players:
-        i = random.randint(0, len(unassigned_players)-1)
+        # Keep generating an index until a self-assignment is avoided
+        i = 0
+        while (True):
+            i = random.randint(0, len(unassigned_players)-1)
+            if (player != unassigned_players[i]): break
 
         print('index = ', i, ', len = ', len(unassigned_players), 
             ' | ', player.first_name, '->', unassigned_players[i].first_name)
