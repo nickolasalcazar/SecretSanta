@@ -19,11 +19,6 @@ player_list.addEventListener('click', function(event) {
     		event.target.textContent = 'Hide Recipient';
     		event.target.parentElement.querySelector('.rvl-recipient-btn').classList.add('revealed');
     		event.target.parentElement.querySelector('.recipient-info').classList.remove('display-none');
-
     	}
-
-
-
-    	//event.target.classList.remove('rvl-recipient-btn')
     }
 });
