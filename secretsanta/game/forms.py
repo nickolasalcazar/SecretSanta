@@ -14,8 +14,11 @@ class CreatePlayerForm(forms.ModelForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
 
+    email = forms.EmailField()
+
     class Meta:
         model = Player
-        fields = ['first_name', 'last_name']
+        #fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'email'] # Added email field
 
 CreatePlayerFormset = formset_factory(CreatePlayerForm, extra=4) # max_forms = 32

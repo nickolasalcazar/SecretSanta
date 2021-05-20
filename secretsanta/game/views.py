@@ -53,11 +53,14 @@ def createGame(request):
             for form in player_formset:
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
+                email = form.cleaned_data.get('email')
 
                 # Save Player instance
                 if first_name:
                     Player(game=game_form.instance,
-                        first_name=first_name, last_name=last_name).save()
+                            first_name=first_name,
+                            last_name=last_name,
+                            email=email)
 
             messages.success(request, 'New game created.')
 
@@ -108,10 +111,12 @@ def updateGame(request, pk):
     
     players = game.player_set.all()
 
-    PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name'))
+    #PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name'))
+    PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name', 'email'))
 
     if request.method == 'POST':
         game_form = CreateGameForm(request.POST, instance=game)
+                                                            # is request.FILES needed?
         player_formset = PlayerInlineFormSet(request.POST, request.FILES, instance=game)
 
         #if game_form.is_valid() and player_formset.is_valid():
@@ -119,6 +124,12 @@ def updateGame(request, pk):
 
 
             if player_formset.is_valid():
+                for form in player_formset:
+                    fields = form.cleaned_data
+
+
+
+
                 player_formset.save()
 
             game_form.save()
