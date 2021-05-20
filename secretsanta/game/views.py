@@ -92,6 +92,10 @@ def gameListView(request, pk):
 
 class GameDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Game
+    # For UserPassesTestMixin: is the request.user the game.host?
+    def test_func(self):
+        game = self.get_object()
+        return self.request.user == game.host
 
 '''
     Function-based view for updating games.
@@ -146,6 +150,8 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = '/game/view-games'
 
     '''
+        MIGHT BE UNEEDED
+
         Overriding the form_valid() method.
         This function sets the author of the post to the user who posts it.
         This must be specified, otherwise the author of the post will be NULL,
@@ -155,13 +161,7 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         form.instance.host = self.request.user # Set author = user
         return super().form_valid(form)
 
-    '''
-        Checks if the user who is updating the post is the author of the post.
-        (Only authors can edit their own posts. This prevents anyone from editing
-        anyone else's post.)
-
-        If a non-author attempts to edit a post, they will be returned a 403 Forbidden page.
-    '''
+    # For UserPassesTestMixin: is the request.user the game.host?
     def test_func(self):
         game = self.get_object()
         return self.request.user == game.host
