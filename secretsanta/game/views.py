@@ -80,6 +80,9 @@ def createGame(request):
 '''
 def gameListView(request, pk):
     host = User.objects.get(pk=pk)
+    # If User is not host of game, redirect them to homepage
+    if request.user != host: return redirect('game-home')
+
     games = Game.objects.filter(host=host)
 
     context = {
@@ -87,9 +90,7 @@ def gameListView(request, pk):
     }
     return render(request, 'game/view_games.html', context)
 
-
-# Note: implement login-required -- add parameter LoginRequiredMixin
-class GameDetailView(DetailView):
+class GameDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Game
 
 '''
@@ -98,6 +99,9 @@ class GameDetailView(DetailView):
 '''
 def updateGame(request, pk):
     game = Game.objects.get(pk=pk)
+    # If User is not host of game, redirect them to homepage
+    if request.user != game.host: return redirect('game-home')
+    
     players = game.player_set.all()
 
     PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name'))
