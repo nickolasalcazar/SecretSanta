@@ -121,15 +121,7 @@ def updateGame(request, pk):
 
         #if game_form.is_valid() and player_formset.is_valid():
         if game_form.is_valid():
-
-
             if player_formset.is_valid():
-                for form in player_formset:
-                    fields = form.cleaned_data
-
-
-
-
                 player_formset.save()
 
             game_form.save()
@@ -200,8 +192,8 @@ def assignPairs(game):
             i = random.randint(0, len(unassigned_players)-1)
             if (player != unassigned_players[i]): break
 
-        print('index = ', i, ', len = ', len(unassigned_players), 
-            ' | ', player.first_name, '->', unassigned_players[i].first_name)
+        #print('index = ', i, ', len = ', len(unassigned_players), 
+        #    ' | ', player.first_name, '->', unassigned_players[i].first_name)
 
         player.recipient = unassigned_players[i]        
         unassigned_players.remove(unassigned_players[i])
