@@ -2,7 +2,7 @@
 {% block content %}
 	<h1>Current Games</h1>
     <div>
-    	{% for game in games %}
+    	{% for game in user.game_set.all %}
     		<p>
     			<a href="{% url 'game-detail' game.id %}">{{ game.title }}</a>
     		</p>

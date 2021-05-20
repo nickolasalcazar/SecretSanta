@@ -20,6 +20,7 @@ from django.views.generic import (
     DeleteView
 )
 
+from django.contrib.auth.models import User
 from .models import Game, Player
 
 from django.forms.models import inlineformset_factory
@@ -62,7 +63,7 @@ def createGame(request):
 
             assignPairs(game_form.instance)
 
-            return redirect('game-home')
+            return redirect('game-detail', game_form.instance.id)
     else:
         game_form = CreateGameForm()
 
@@ -74,11 +75,18 @@ def createGame(request):
 
     return render(request, 'game/game_form.html', context)
 
-# Note: implement login-required -- add parameter LoginRequiredMixin
-class GameListView(ListView):
-    model = Game
-    template_name = 'game/view_games.html'
-    context_object_name = 'games'
+'''
+    Function-based view for displaying the list of Games created by a User.
+'''
+def gameListView(request, pk):
+    host = User.objects.get(pk=pk)
+    games = Game.objects.filter(host=host)
+
+    context = {
+        'games': games
+    }
+    return render(request, 'game/view_games.html', context)
+
 
 # Note: implement login-required -- add parameter LoginRequiredMixin
 class GameDetailView(DetailView):
