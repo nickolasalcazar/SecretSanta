@@ -11,9 +11,9 @@
 	    	{% for player in object.player_set.all %}
 	    		<li>
                     <div>
-                        {{ player.first_name }} 
+                        {{ player.name }} 
                         <span class="recipient-info display-none">➨ 
-                            {{ player.recipient.first_name }} 
+                            {{ player.recipient.name }} 
                         </span>
                         <button class="rvl-recipient-btn">Reveal Recipient</button>
                     </div>

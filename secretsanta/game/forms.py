@@ -11,14 +11,17 @@ class CreateGameForm(forms.ModelForm):
         fields = ['title']
 
 class CreatePlayerForm(forms.ModelForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'optional'}))
+    name = forms.CharField()
+
+    #first_name = forms.CharField()
+    #last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'optional'}))
 
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'optional'}))
 
     class Meta:
         model = Player
-        fields = ['first_name', 'last_name', 'email']
+        #fields = ['first_name', 'last_name', 'email']
+        fields = ['name', 'email']
 
 # Can the 'extra' variable be changed dynamically?
 CreatePlayerFormset = formset_factory(CreatePlayerForm, extra=4) # max_forms = 32
@@ -30,8 +33,9 @@ CreatePlayerFormset = formset_factory(CreatePlayerForm, extra=4) # max_forms = 3
 	Used in the game.views.updateGame
 '''
 PlayerInlineFormSet = inlineformset_factory(Game, Player,
-                            fields=('first_name', 'last_name', 'email'),
+                            #fields=('first_name', 'last_name', 'email'),
+                            fields=('name', 'email'),
                             widgets={
-                                'last_name': forms.TextInput(attrs={'placeholder': 'optional'}),
+                                #'last_name': forms.TextInput(attrs={'placeholder': 'optional'}),
                                 'email': forms.TextInput(attrs={'placeholder': 'optional'})
                                 })

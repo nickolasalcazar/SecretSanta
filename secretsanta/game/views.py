@@ -52,15 +52,16 @@ def createGame(request):
             # Handle forms for creating Player objects
             # Extract names from form and save
             for form in player_formset:
-                first_name = form.cleaned_data.get('first_name')
-                last_name = form.cleaned_data.get('last_name')
+                #first_name = form.cleaned_data.get('first_name')
+                #last_name = form.cleaned_data.get('last_name')
+                name = form.cleaned_data.get('name')
                 email = form.cleaned_data.get('email')
 
                 # Save Player instance
                 if first_name:
                     Player(game=game_form.instance,
-                            first_name=first_name,
-                            last_name=last_name,
+                            name=name,
+                            #first_name=first_name, last_name=last_name,
                             email=email)
 
             messages.success(request, 'New game created.')
@@ -174,6 +175,10 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 '''
 def assignPairs(game):
     players = game.player_set.all()
+    print('assignPairs() for player_set: ', players)
+    print('             players.count(): ', players.count())
+    print('                len(players): ', len(players))
+
 
     if players.count() % 2 != 0: raise Exception('Odd number of players.')
 
