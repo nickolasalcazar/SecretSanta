@@ -27,6 +27,7 @@ from .models import Game, Player
 from django.forms.models import inlineformset_factory
 
 import random
+import secrets
 
 '''
     Function-based view for the home page of the site.
@@ -187,19 +188,40 @@ def assignPairs(game):
     # Unassign all recipients
     players.update(recipient=None)
 
+
+    # Still has a chance of infinite loop
+
     # Re-assign all recipients
     for player in players:
         # Keep generating an index until a self-assignment is avoided
-        i = 0
+        z = 0
+        
+        choice = None
+
         while (True):
-            i = random.randint(0, len(unassigned_players)-1)
-            if (player != unassigned_players[i]): break
+            z += 1
+            if (z > 10): raise Exception('Infinite loop')
 
-        #print('index = ', i, ', len = ', len(unassigned_players), 
-        #    ' | ', player.first_name, '->', unassigned_players[i].first_name)
 
-        player.recipient = unassigned_players[i]        
-        unassigned_players.remove(unassigned_players[i])
+            #i = random.randint(0, len(unassigned_players)-1)
+            choice = secrets.choice(unassigned_players)
+
+            print(player.name, '->', choice.name, '?')
+
+            if (player != choice): break
+
+            print('\tlooping')
+
+
+        print('\t', player.name, '->', choice.name, '\b')
+        
+
+
+        player.recipient = choice
+        unassigned_players.remove(choice)
+
+        print('\t', unassigned_players)
+
         player.save()
 
 
