@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import (
     CreateGameForm,
-    CreatePlayerFormset
+    CreatePlayerFormset,
+    PlayerInlineFormSet
 )
 
 from django.views.generic import (
@@ -26,8 +27,6 @@ from .models import Game, Player
 from django.forms.models import inlineformset_factory
 
 import random
-
-from django import forms
 
 '''
     Function-based view for the home page of the site.
@@ -112,15 +111,6 @@ def updateGame(request, pk):
     if request.user != game.host: return redirect('game-home')
     
     players = game.player_set.all()
-
-    #PlayerInlineFormSet = inlineformset_factory(Game, Player, fields=('first_name', 'last_name'))
-    PlayerInlineFormSet = inlineformset_factory(Game, Player,
-                            fields=('first_name', 'last_name', 'email'),
-                            widgets={
-                                'last_name': forms.TextInput(attrs={'placeholder': 'optional'}),
-                                'email': forms.TextInput(attrs={'placeholder': 'optional'})
-                                })
-
 
     if request.method == 'POST':
         game_form = CreateGameForm(request.POST, instance=game)
