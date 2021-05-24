@@ -1,8 +1,6 @@
 // JS for templates/game/game_form.html
 console.log('game/update_game_form.js');
-console.log('cached 1')
-
-const submit_game_btn = document.querySelector('#submit-game-btn')
+console.log('cached 6')
 
 const add_player_btn = document.querySelector('#add-player-btn');
 
@@ -48,8 +46,9 @@ add_player_btn.addEventListener('click', function(event) {
 // then the event will be bubbled up to the parent node game_form.
 // The expression event.target refers to the element the event fired on.
 game_form.addEventListener('click', function(event) {
-    event.preventDefault();
     if (event.target.classList.contains('rmv-player-btn')) {
+        event.preventDefault();
+
         if (!canDeleteRow(event.target)) return;
         
         parentForm = event.target.parentElement;
@@ -61,6 +60,9 @@ game_form.addEventListener('click', function(event) {
     }
     validateForm();
 });
+
+const submit_game_btn = document.querySelector('#submit-game-btn')
+validateForm(); // Make validation check after eventListeners are added
 
 /*
  * Counts the number of Players in a Game,
@@ -98,7 +100,8 @@ function evenPlayerCount() { return (countPlayers() % 2) == 0; }
  */
 function validateForm() { 
     const totalPlayers = countPlayers();
-    return (!(totalPlayers % 2) == 0 || totalPlayers < 4); }
+    submit_game_btn.disabled = !((totalPlayers % 2 == 0) && totalPlayers >= 4);
+}
 
 /*
  * Returns a Boolean of whether formRow can be deleted.
