@@ -53,17 +53,9 @@ def createGame(request):
             # Handle forms for creating Player objects
             # Extract names from form and save
             for form in player_formset:
-                #first_name = form.cleaned_data.get('first_name')
-                #last_name = form.cleaned_data.get('last_name')
                 name = form.cleaned_data.get('name')
                 email = form.cleaned_data.get('email')
-
-                # Save Player instance
-                if first_name:
-                    Player(game=game_form.instance,
-                            name=name,
-                            #first_name=first_name, last_name=last_name,
-                            email=email)
+                Player(game=game_form.instance, name=name, email=email).save()
 
             messages.success(request, 'New game created.')
 
@@ -80,28 +72,6 @@ def createGame(request):
     }
 
     return render(request, 'game/game_form.html', context)
-
-'''
-    Function-based view for displaying the list of Games created by a User.
-'''
-def gameListView(request, pk):
-    host = User.objects.get(pk=pk)
-    # If User is not host of game, redirect them to homepage
-    if request.user != host: return redirect('game-home')
-
-    games = Game.objects.filter(host=host)
-
-    context = {
-        'games': games
-    }
-    return render(request, 'game/view_games.html', context)
-
-class GameDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    model = Game
-    # For UserPassesTestMixin: is the request.user the game.host?
-    def test_func(self):
-        game = self.get_object()
-        return self.request.user == game.host
 
 '''
     Function-based view for updating games.
@@ -146,11 +116,33 @@ def updateGame(request, pk):
 
     return render(request, 'game/game_form.html', context)
 
+'''
+    Function-based view for displaying the list of Games created by a User.
+'''
+def gameListView(request, pk):
+    host = User.objects.get(pk=pk)
+    # If User is not host of game, redirect them to homepage
+    if request.user != host: return redirect('game-home')
+
+    games = Game.objects.filter(host=host)
+
+    context = {
+        'games': games
+    }
+    return render(request, 'game/view_games.html', context)
+
+class GameDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Game
+    # For UserPassesTestMixin: is the request.user the game.host?
+    def test_func(self):
+        game = self.get_object()
+        return self.request.user == game.host
+
 # Add LoginRequiredMixin
 class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'game/confirm_delete_game.html'
     model = Game
-    success_url = '/game/view-games'
+    success_url = '/game/view-games' ############################################ BUG HERE
 
     '''
         MIGHT BE UNEEDED

@@ -16,7 +16,7 @@ class CreatePlayerForm(forms.ModelForm):
     #first_name = forms.CharField()
     #last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'optional'}))
 
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'optional'}))
+    email = forms.EmailField(required=False, widget=forms.TextInput(attrs={'placeholder': 'optional'}))
 
     class Meta:
         model = Player

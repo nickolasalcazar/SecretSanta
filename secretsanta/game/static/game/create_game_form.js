@@ -1,8 +1,6 @@
 // JS for templates/game/game_form.html
 console.log('game/create_game_form.js');
-console.log('cached 10')
-
-const submit_game_btn = document.querySelector('#submit-game-btn')
+console.log('cached 11')
 
 const add_player_btn = document.querySelector('#add-player-btn');
 
@@ -18,7 +16,7 @@ let formCount = player_form_rows.length - 1;
 
 // Add player-form-row
 add_player_btn.addEventListener('click', function(event) {
-    event.preventDefault();
+    //event.preventDefault();
     if (countPlayers() == 32 || formCount == 31) {
         alert("Maximum number of players is 32.");
         return;
@@ -46,14 +44,11 @@ add_player_btn.addEventListener('click', function(event) {
 // Remove player-form-row. Event bubbling.
 game_form.addEventListener('click', function(event) {
     if (event.target.classList.contains('rmv-player-btn')) {
-        if (!canDeleteRow(event.target)) return;
+        //event.preventDefault();
 
-        event.preventDefault();
+        if (!canDeleteRow(event.target)) return;
         
         parentForm = event.target.parentElement;
-
-        console.log(event.target.parentElement)
-        console.log(event.target.parentElement.querySelector('input[type=checkbox]'))
 
         // Reset 'name' and 'email' fields
         event.target.parentElement.querySelectorAll('input')[0].setAttribute('value', '');
@@ -64,7 +59,7 @@ game_form.addEventListener('click', function(event) {
     }
     validateForm();
 });
-
+const submit_game_btn = document.querySelector('#submit-game-btn')
 validateForm(); // Make validation check after eventListeners are added
 
 /*
@@ -99,7 +94,8 @@ function countForms() {
  */
 function validateForm() { 
     const totalPlayers = countPlayers();
-    return (!(totalPlayers % 2) == 0 || totalPlayers < 4); }
+    submit_game_btn.disabled = !((totalPlayers % 2 == 0) && totalPlayers >= 4);
+}
 
 /*
  * Returns a Boolean of whether formRow can be deleted.
