@@ -1,6 +1,6 @@
 // JS for templates/game/game_form.html
 console.log('game/update_game_form.js');
-console.log('cached 22')
+console.log('cached 1')
 
 const submit_game_btn = document.querySelector('#submit-game-btn')
 
