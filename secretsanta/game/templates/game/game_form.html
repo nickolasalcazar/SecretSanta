@@ -28,5 +28,10 @@
             <button id='submit-game-btn'  type='submit'>{{ action_title }} Game</button>
         </form>
     </div>
-    <script src="{% static 'game/game_form.js' %}"></script>
+
+    {% if 'Update' == action_title %}
+        <script src="{% static 'game/update_game_form.js' %}"></script>
+    {% else %}
+        <script src="{% static 'game/create_game_form.js' %}"></script>
+    {% endif %}
 {% endblock content %}
