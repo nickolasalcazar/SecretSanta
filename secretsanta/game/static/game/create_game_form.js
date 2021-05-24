@@ -82,7 +82,7 @@ function countPlayers() {
 }
 
 /*
- * Counts the total number of Player forms, excluding hidden Player forms.
+ * Counts the total number of Player forms, excluding empty or hidden Player forms.
  */
 function countForms() {
     let count = 0;
