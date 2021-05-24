@@ -10,16 +10,11 @@ const game_form = document.querySelector('#game-form');
 const player_form = document.querySelector('#add-player-form');
 const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
 
-let newGame = true; // Indicates if form creates a new Game, rather than update an existing one
-
 // Select Django form manager TOTAL_FORMS variable
 let totalForms = document.querySelector("#id_form-TOTAL_FORMS");
 
 // Number of Player forms (including empty)
 let formCount = player_form_rows.length - 1;
-
-// Number of Players in the Game
-//let playerCount = countPlayers();
 
 // Add player-form-row
 add_player_btn.addEventListener('click', function(event) {
@@ -36,22 +31,10 @@ add_player_btn.addEventListener('click', function(event) {
     newPlayerForm.querySelectorAll('input')[0].setAttribute('value', '');
     newPlayerForm.querySelectorAll('input')[1].setAttribute('value', '');
 
-    // Update Django management_form to handle new forms
+    // Update Django management form variables
     formCount++;
     let formRegex = RegExp(`form-(\\d){1}-`, 'g');
-    
-    // If createForm
-    if (newPlayerForm.innerHTML.match(formRegex, `form-${formCount}-`)) {
-        newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `form-${formCount}-`);
-        console.log('createGame form')
-    } else {
-
-        // Else updateForm
-        let formRegex = RegExp(`set-(\\d){1}-`);
-        //newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `set-${formCount}-`);
-        newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `set-${formCount}-`);
-        console.log('updateGame form')
-    }
+    newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `form-${formCount}-`);
 
     // Insert new form into formset
     player_form.appendChild(newPlayerForm);
@@ -60,37 +43,32 @@ add_player_btn.addEventListener('click', function(event) {
     validateForm();
 });
 
-// Remove player-form-row
-// Event bubbling. If any child element of game_form is clicked,
-// then the event will be bubbled up to the parent node game_form.
-// The expression event.target refers to the element the event fired on.
+// Remove player-form-row. Event bubbling.
 game_form.addEventListener('click', function(event) {
     if (event.target.classList.contains('rmv-player-btn')) {
-        // (Grabs first_name field of the Player)
-        // event.target.parentElement.querySelector('input').value
+        if (!canDeleteRow(event.target)) return;
 
-        if (countPlayers() == 4) {
-                event.preventDefault();
-                alert("Minimum number of players is 4.");
-        } else {
-            event.preventDefault();
-            
-            parentForm = event.target.parentElement;
+        event.preventDefault();
+        
+        parentForm = event.target.parentElement;
 
-            console.log(event.target.parentElement)
-            console.log(event.target.parentElement.querySelector('input[type=checkbox]'))
+        console.log(event.target.parentElement)
+        console.log(event.target.parentElement.querySelector('input[type=checkbox]'))
 
-            if (!newGame) parentForm.querySelector('input[type=checkbox]').checked = true;
-            
-            parentForm.style.display = 'none';
-        }
+        // Reset 'name' and 'email' fields
+        event.target.parentElement.querySelectorAll('input')[0].setAttribute('value', '');
+        event.target.parentElement.querySelectorAll('input')[1].setAttribute('value', '');
+        
+        parentForm.style.display = 'none';
+    
     }
     validateForm();
 });
 
+validateForm(); // Make validation check after eventListeners are added
+
 /*
- * Counts the number of Players in a Game,
- * excluding empty or hidden Player forms.
+ * Counts the total number of Players in a Game, excluding empty or hidden Player forms.
  */
 function countPlayers() {
     let count = 0;
@@ -103,35 +81,31 @@ function countPlayers() {
     return count;
 }
 
-// Return true if playerCount is even.
-function evenPlayerCount() { return (countPlayers() % 2) == 0; }
-
 /*
- * Prevents User from submitting a Game. 
- * Used when certain Game criteria are not met, such as when there
- * is not an even number of Players.
+ * Counts the total number of Player forms, excluding hidden Player forms.
  */
-function validateForm() {
-    // If a criteria is not met:
-        // Disable the submit button;
-        // Display message;
-    // Else if criteria are met:
-        // Enable the submit, (even if already enabled)
-
-    //console.log('validateForm(), totalForms = ', totalForms)
-
-    if (!evenPlayerCount()) {
-        submit_game_btn.disabled = true;
-        console.log('Disabled submit. playerCount = ', countPlayers())
-    } else {
-        submit_game_btn.disabled = false;
-        console.log('Enabling submit. playerCount = ', countPlayers())
+function countForms() {
+    let count = 0;
+    for (let form of player_form_rows) {
+        if (window.getComputedStyle(form).display === 'none') continue; // Ignore hidden forms
+        count++;
     }
+    return count;
 }
 
+/*
+ * Disables submit button if certain Game criteria are not met, such as when there
+ * is not an even number of Players.
+ */
+function validateForm() { 
+    const totalPlayers = countPlayers();
+    return (!(totalPlayers % 2) == 0 || totalPlayers < 4); }
 
-
-
+/*
+ * Returns a Boolean of whether formRow can be deleted.
+ * If there are at least five form rows, then any form row can be deleted.
+ */
+function canDeleteRow(formRow) { return countForms() >= 5; }
 
 
 
