@@ -55,7 +55,7 @@ game_form.addEventListener('click', function(event) {
         
         parentForm = event.target.parentElement;
 
-        // Reset 'name' and 'email' fields
+        // Reset 'name' and 'email' fields before removal
         event.target.parentElement.querySelectorAll('input')[0].value = '';
         event.target.parentElement.querySelectorAll('input')[1].value = '';
         
