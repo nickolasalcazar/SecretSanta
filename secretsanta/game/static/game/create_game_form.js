@@ -43,7 +43,7 @@ add_player_btn.addEventListener('click', function(event) {
     player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
 
-    attachOnInputListeners()
+    attachOnInputListeners();
 });
 
 // Remove player-form-row. Event bubbling.
@@ -56,8 +56,8 @@ game_form.addEventListener('click', function(event) {
         parentForm = event.target.parentElement;
 
         // Reset 'name' and 'email' fields
-        event.target.parentElement.querySelectorAll('input')[0].setAttribute('value', '');
-        event.target.parentElement.querySelectorAll('input')[1].setAttribute('value', '');
+        event.target.parentElement.querySelectorAll('input')[0].value = '';
+        event.target.parentElement.querySelectorAll('input')[1].value = '';
         
         parentForm.style.display = 'none';
     }

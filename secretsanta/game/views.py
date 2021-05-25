@@ -56,6 +56,8 @@ def createGame(request):
             # Extract names from form and save
             for form in player_formset:
                 name = form.cleaned_data.get('name')
+                # if name is empty, do not save Player
+                if name == '' or name == None: continue
                 email = form.cleaned_data.get('email')
                 Player(game=game_form.instance, name=name, email=email).save()
 
