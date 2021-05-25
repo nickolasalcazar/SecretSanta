@@ -1,12 +1,17 @@
 // JS for templates/game/game_form.html
 console.log('game/create_game_form.js');
-console.log('cached 11')
+console.log('cached 2')
 
 const add_player_btn = document.querySelector('#add-player-btn');
 
 const game_form = document.querySelector('#game-form');
 const player_form = document.querySelector('#add-player-form');
 const player_form_rows = document.getElementsByClassName('add-player-row'); // Returns live list
+
+// Criteria list variables
+const criteria_list = document.querySelector('#criteria-list');
+const odd_player_msg = document.querySelector('#odd-player-msg');
+const min_player_msg = document.querySelector('#min-player-msg');
 
 // Select Django form manager TOTAL_FORMS variable
 let totalForms = document.querySelector("#id_form-TOTAL_FORMS");
@@ -16,7 +21,7 @@ let formCount = player_form_rows.length - 1;
 
 // Add player-form-row
 add_player_btn.addEventListener('click', function(event) {
-    //event.preventDefault();
+    event.preventDefault();
     if (countPlayers() == 32 || formCount == 31) {
         alert("Maximum number of players is 32.");
         return;
@@ -44,7 +49,7 @@ add_player_btn.addEventListener('click', function(event) {
 // Remove player-form-row. Event bubbling.
 game_form.addEventListener('click', function(event) {
     if (event.target.classList.contains('rmv-player-btn')) {
-        //event.preventDefault();
+        event.preventDefault();
 
         if (!canDeleteRow(event.target)) return;
         
@@ -95,6 +100,7 @@ function countForms() {
 function validateForm() { 
     const totalPlayers = countPlayers();
     submit_game_btn.disabled = !((totalPlayers % 2 == 0) && totalPlayers >= 4);
+    addMessages(totalPlayers);
 }
 
 /*
@@ -103,7 +109,16 @@ function validateForm() {
  */
 function canDeleteRow(formRow) { return countForms() >= 5; }
 
-
+/*
+ * Displays elements that specify critieria to creating a Game.
+ * Takes current total number of Players as an argument.
+ */
+function addMessages(totalPlayers) {
+    if (totalPlayers % 2 == 0) odd_player_msg.style.display = 'none';
+    else odd_player_msg.style.display = '';
+    if (totalPlayers >= 4) min_player_msg.style.display = 'none';
+    else min_player_msg.style.display = '';
+}
 
 
 
