@@ -22,7 +22,7 @@ let formCount = player_form_rows.length - 1;
 // Add player-form-row
 add_player_btn.addEventListener('click', function(event) {
     event.preventDefault();
-     if (countPlayers() == 32 || formCount == 31) {
+    if (countPlayers() == 32 || formCount == 31) {
         alert("Maximum number of players is 32.");
         return;
     }
