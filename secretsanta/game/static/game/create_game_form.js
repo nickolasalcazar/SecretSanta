@@ -43,7 +43,7 @@ add_player_btn.addEventListener('click', function(event) {
     player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
 
-    validateForm();
+    attachOnInputListeners()
 });
 
 // Remove player-form-row. Event bubbling.
@@ -60,15 +60,12 @@ game_form.addEventListener('click', function(event) {
         event.target.parentElement.querySelectorAll('input')[1].setAttribute('value', '');
         
         parentForm.style.display = 'none';
-        
-        // Attach event listener to detect any change
-        event.target.parentElement.querySelectorAll('input').oninput = validateForm;
     }
     validateForm();
 });
+
 const submit_game_btn = document.querySelector('#submit-game-btn')
 validateForm(); // Make validation check after eventListeners are added
-
 attachOnInputListeners()
 
 /*
