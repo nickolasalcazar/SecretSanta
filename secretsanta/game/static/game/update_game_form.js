@@ -66,7 +66,7 @@ game_form.addEventListener('click', function(event) {
 
 const submit_game_btn = document.querySelector('#submit-game-btn')
 validateForm(); // Make validation check after eventListeners are added
-attachOnInputListeners() // Attach oninput event listeners
+attachOnInputListeners()
 
 /*
  * Counts the number of Players in a Game,
