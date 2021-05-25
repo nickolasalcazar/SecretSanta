@@ -1,6 +1,6 @@
 // JS for templates/game/game_form.html
 console.log('game/update_game_form.js');
-console.log('cached15')
+console.log('cache 1')
 
 const add_player_btn = document.querySelector('#add-player-btn');
 
@@ -36,14 +36,13 @@ add_player_btn.addEventListener('click', function(event) {
 
     // Update Django management form variables
     formCount++;
-    let formRegex = RegExp(`set-(\\d){1}-`);
+    let formRegex = RegExp(`set-(\\d){1}-`, 'g'); // 'g' for global search and replace
     newPlayerForm.innerHTML = newPlayerForm.innerHTML.replace(formRegex, `set-${formCount}-`);
 
     // Insert new form into formset
     player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
 
-    // Attach listeners
     attachOnInputListeners();
 });
 
@@ -55,6 +54,12 @@ game_form.addEventListener('click', function(event) {
         if (!canDeleteRow(event.target)) return;
         
         parentForm = event.target.parentElement;
+
+        // Reset 'name' and 'email' fields before removal
+        event.target.parentElement.querySelectorAll('input')[0].value = '';
+        event.target.parentElement.querySelectorAll('input')[1].value = '';
+
+        console.log(event.target.parentElement.querySelectorAll('input')[0].value = '')
 
         // Mark form for deletion
         parentForm.querySelector('input[type=checkbox]').checked = true;
