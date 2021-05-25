@@ -91,8 +91,6 @@ function countForms() {
     return count;
 }
 
-// Return true if playerCount is even.
-function evenPlayerCount() { return (countPlayers() % 2) == 0; }
 
 /*
  * Disables submit button if certain Game criteria are not met, such as when there
