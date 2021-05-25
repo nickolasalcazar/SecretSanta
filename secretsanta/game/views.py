@@ -26,6 +26,8 @@ from .models import Game, Player
 
 from django.forms.models import inlineformset_factory
 
+from django.urls import reverse
+
 import random
 import secrets
 
@@ -142,11 +144,12 @@ class GameDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'game/confirm_delete_game.html'
     model = Game
-    success_url = '/game/view-games' ############################################ BUG HERE
+
+    def get_success_url(self):
+        host = self.object.host 
+        return reverse( 'view-games', kwargs={'pk': host.id})
 
     '''
-        MIGHT BE UNEEDED
-
         Overriding the form_valid() method.
         This function sets the author of the post to the user who posts it.
         This must be specified, otherwise the author of the post will be NULL,
