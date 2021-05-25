@@ -43,7 +43,8 @@ add_player_btn.addEventListener('click', function(event) {
     player_form.appendChild(newPlayerForm);
     totalForms.setAttribute('value', `${formCount + 1}`);
 
-    validateForm();
+    // Attach listeners
+    attachOnInputListeners();
 });
 
 // Remove player-form-row. Event bubbling.
@@ -65,6 +66,7 @@ game_form.addEventListener('click', function(event) {
 
 const submit_game_btn = document.querySelector('#submit-game-btn')
 validateForm(); // Make validation check after eventListeners are added
+attachOnInputListeners() // Attach oninput event listeners
 
 /*
  * Counts the number of Players in a Game,
@@ -121,6 +123,12 @@ function addMessages(totalPlayers) {
     else min_player_msg.style.display = '';
 }
 
+/*
+ * Attaches oninput event listeners to form inputs. Calls validateForm() upon firing.
+ */
+function attachOnInputListeners() {
+    for (let form of player_form_rows) form.querySelector('input').oninput = validateForm;
+}
 
 
 
