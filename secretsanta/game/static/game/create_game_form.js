@@ -1,6 +1,6 @@
 // JS for templates/game/game_form.html
 console.log('game/create_game_form.js');
-console.log('cached 2')
+console.log('cached 0')
 
 const add_player_btn = document.querySelector('#add-player-btn');
 
@@ -60,12 +60,16 @@ game_form.addEventListener('click', function(event) {
         event.target.parentElement.querySelectorAll('input')[1].setAttribute('value', '');
         
         parentForm.style.display = 'none';
-    
+        
+        // Attach event listener to detect any change
+        event.target.parentElement.querySelectorAll('input').oninput = validateForm;
     }
     validateForm();
 });
 const submit_game_btn = document.querySelector('#submit-game-btn')
 validateForm(); // Make validation check after eventListeners are added
+
+attachOnInputListeners()
 
 /*
  * Counts the total number of Players in a Game, excluding empty or hidden Player forms.
@@ -97,7 +101,7 @@ function countForms() {
  * Disables submit button if certain Game criteria are not met, such as when there
  * is not an even number of Players.
  */
-function validateForm() { 
+function validateForm() {
     const totalPlayers = countPlayers();
     submit_game_btn.disabled = !((totalPlayers % 2 == 0) && totalPlayers >= 4);
     addMessages(totalPlayers);
@@ -120,6 +124,11 @@ function addMessages(totalPlayers) {
     else min_player_msg.style.display = '';
 }
 
-
+/*
+ * Attaches oninput event listeners to form inputs. Calls validateForm() upon firing.
+ */
+function attachOnInputListeners() {
+    for (let form of player_form_rows) form.querySelector('input').oninput = validateForm;
+}
 
 
