@@ -170,13 +170,15 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     Randomly assigns each Player a distinct recipient.
     Performance is contingent on game having an even number of Players.
     Throws an exception if game has odd number of Players.
+
+    Current implementation is pretty jank: every time an infinite loop 
+    is detected, it keeps trying again.
 '''
 def assignPairs(game):
     players = game.player_set.all()
     print('assignPairs() for player_set: ', players)
     print('             players.count(): ', players.count())
     print('                len(players): ', len(players))
-
 
     if players.count() % 2 != 0: raise Exception('Odd number of players.')
 
@@ -185,22 +187,25 @@ def assignPairs(game):
     # Unassign all recipients
     players.update(recipient=None)
 
-
-    # Still has a chance of infinite loop
+    exit = False
 
     # Re-assign all recipients
     for player in players:
-        # Keep generating an index until a self-assignment is avoided
+        
         z = 0
         
         choice = None
 
         while (True):
             z += 1
-            if (z > 10): raise Exception('Infinite loop')
+            if (z > 3): 
+                #raise Exception('Infinite loop')
+                print('Infinite loop... Trying again')
+                assignPairs(game)
+                exit = True
+                break
 
-
-            #i = random.randint(0, len(unassigned_players)-1)
+            # Keep selecting a random Player until self-assignment is avoided
             choice = secrets.choice(unassigned_players)
 
             print(player.name, '->', choice.name, '?')
@@ -209,11 +214,10 @@ def assignPairs(game):
 
             print('\tlooping')
 
+        if exit: break
 
         print('\t', player.name, '->', choice.name, '\b')
         
-
-
         player.recipient = choice
         unassigned_players.remove(choice)
 
