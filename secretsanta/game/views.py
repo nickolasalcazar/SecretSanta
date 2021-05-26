@@ -177,6 +177,9 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def notifyPlayersView(request, pk):
     game = Game.objects.get(pk=pk)
 
+    # If User is not host of game, redirect them to homepage
+    if game.host != request.user: return redirect('game-home')
+
     # I am assuming this the appropriate way to handle a confirmation buttom
     if request.method == 'POST':
         players = game.player_set.all()
@@ -200,13 +203,13 @@ def notifyPlayersView(request, pk):
                 print('Emailing ', player.name, ' at ', player.email)
                 send_mail(
                     # subject
-                    'Secret Santa Game Notification - Check your recipient here!',
+                    'Secret Santa Bot - Check your recipient here! 👈🎄☃️',
 
                     # message body
                     f'Hi {player.name}!\n\n{game.host.first_name} {game.host.last_name} invites you to a game of Secret Santa. '
                     + 'This Secret Santa game includes ' + player_list_string + '. Hopefully you know them!'
 
-                    + f'\n\nAs a secret Santa, your recipient is {player.recipient.name}! What are you gonna get them?'
+                    + f'\n\nAs a secret Santa, your recipient is {player.recipient.name}! What are you going to get them?'
 
                     + '\nWho is your secret Santa?\n\nHappy gifting!\nSecret Santa Bot :-)',
                     # from email
