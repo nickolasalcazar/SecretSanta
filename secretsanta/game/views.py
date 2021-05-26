@@ -180,16 +180,35 @@ def notifyPlayersView(request, pk):
     # I am assuming this the appropriate way to handle a confirmation buttom
     if request.method == 'POST':
         players = game.player_set.all()
-
+        playerCount = len(players)
         for player in players:
+            player_list_string = ''
             if player.email:
+                for i in range(playerCount):
+                    if player == players[i]:
+                        if (i == playerCount-1): 
+                            player_list_string += 'and ' + players[i].name + ' (you!)'
+                            break
+                        else:
+                            player_list_string += players[i].name + ' (you!), '
+                    else:
+                        if i == playerCount-1: 
+                            player_list_string += 'and ' + players[i].name
+                            break
+                        player_list_string += players[i].name + ', '
+
                 print('Emailing ', player.name, ' at ', player.email)
                 send_mail(
                     # subject
-                    'Testing Mailgun',
+                    'Secret Santa Game Notification - Check your recipient here!',
 
                     # message body
-                    'This is a test! Hopefully it has worked...',
+                    f'Hi {player.name}!\n\n{game.host.first_name} {game.host.last_name} invites you to a game of Secret Santa. '
+                    + 'This Secret Santa game includes ' + player_list_string + '. Hopefully you know them!'
+
+                    + f'\n\nAs a secret Santa, your recipient is {player.recipient.name}! What are you gonna get them?'
+
+                    + '\nWho is your secret Santa?\n\nHappy gifting!\nSecret Santa Bot :-)',
                     # from email
                     'nickolasalcazar@gmail.com',
                     # recipient, recipient list
