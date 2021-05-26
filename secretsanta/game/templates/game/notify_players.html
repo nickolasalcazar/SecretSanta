@@ -1,0 +1,26 @@
+{% extends "game/base.html" %}
+{% block content %}
+	<h1>Notify Players</h1>
+	<div>
+		<h3>Title: {{ game.title }}</h3>
+		<p>
+			The participants listed below may be notified via email of whome their Secret Santa recipient is.
+			Please verify the correctness of the following addresses before notifying particpiants.
+			Participants who are not listed below do not have a valid email.
+		</p>
+		<div>
+			{% for player in game.player_set.all %}
+    			{% if player.email %}
+    				<li> {{ player.name }} - {{ player.email }} </li>
+    			{% endif %}
+		    {% endfor %}
+		</div>
+		<div>
+			<a href="{% url 'game-update' game.id %}">Edit Game</a>
+			<form method="POST">
+				{% csrf_token %}
+	    		<input type="submit" value="Notify players via email">
+	    	</form>
+		</div>
+    </div>
+{% endblock content %}

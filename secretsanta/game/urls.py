@@ -23,4 +23,6 @@ urlpatterns = [
 
     path('game/<int:pk>/delete/', GameDeleteView.as_view(), name='game-delete'),
 
+    path('game/notify/<int:pk>/', views.notifyPlayersView, name='game-notify-players')
+
 ]

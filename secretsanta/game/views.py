@@ -149,7 +149,7 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         host = self.object.host 
-        return reverse( 'view-games', kwargs={'pk': host.id})
+        return reverse('view-games', kwargs={'pk': host.id})
 
     '''
         Overriding the form_valid() method.
@@ -165,6 +165,36 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         game = self.get_object()
         return self.request.user == game.host
+
+'''
+    View for displaying the Players that will be notified via email,
+    information regarding this feature,
+    and, possibly, a ReCAPTCHA for preventing abuse.
+
+    ! IMPLEMENT LOGIN REQUIRED !
+'''
+def notifyPlayersView(request, pk):
+    game = Game.objects.get(pk=pk)
+
+    # I am assuming this the appropriate way to handle a confirmation buttom
+    if request.method == 'POST':
+        players = game.player_set.all()
+
+        for player in players:
+            if player.email:
+                print('Emailing ', player.name, ' at ', player.email)
+            else: print('Email invalid: ', player.name, '; ', player.email)
+
+
+        messages.success(request, 'Players notifed via email.')
+        return redirect('game-detail', pk)
+
+    context = {
+        'game': game,
+    }
+
+    return render(request, 'game/notify_players.html', context)
+
 
 '''
     Randomly assigns each Player a distinct recipient.
@@ -224,8 +254,6 @@ def assignPairs(game):
         print('\t', unassigned_players)
 
         player.save()
-
-
 
 
 
