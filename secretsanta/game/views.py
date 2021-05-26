@@ -213,7 +213,7 @@ def notifyPlayersView(request, pk):
 
                     + '\nWho is your secret Santa?\n\nHappy gifting!\nSecret Santa Bot :-)',
                     # from email
-                    'nickolasalcazar@gmail.com',
+                    'secret-santa@mailgun.nalcazar.com',
                     # recipient, recipient list
                     [player.email]
                     )
