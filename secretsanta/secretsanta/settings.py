@@ -121,6 +121,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Email Settings ###################################################
+EMAIL_USE_TLS = True                                # Encryption / security protocol
+EMAIL_HOST = decouple_config('EMAIL_HOST')          # The service we are using to handle our emails
+EMAIL_PORT = decouple_config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = decouple_config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = decouple_config('EMAIL_HOST_PASSWORD')
+####################################################################
+
 LOGIN_REDIRECT_URL = 'game-home'
 
 # Default primary key field type

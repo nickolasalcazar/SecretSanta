@@ -28,8 +28,9 @@ from django.forms.models import inlineformset_factory
 
 from django.urls import reverse
 
-import random
 import secrets
+
+from django.core.mail import send_mail
 
 '''
     Function-based view for the home page of the site.
@@ -183,7 +184,20 @@ def notifyPlayersView(request, pk):
         for player in players:
             if player.email:
                 print('Emailing ', player.name, ' at ', player.email)
-            else: print('Email invalid: ', player.name, '; ', player.email)
+                send_mail(
+                    # subject
+                    'Testing Mailgun',
+
+                    # message body
+                    'This is a test! Hopefully it has worked...',
+                    # from email
+                    'nickolasalcazar@gmail.com',
+                    # recipient, recipient list
+                    [player.email]
+                    )
+
+
+            else: print('Email invalid for ', player.name, ', email =', player.email)
 
 
         messages.success(request, 'Players notifed via email.')
