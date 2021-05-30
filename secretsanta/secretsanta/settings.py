@@ -78,8 +78,16 @@ WSGI_APPLICATION = 'secretsanta.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        #'ENGINE': 'django.db.backends.sqlite3'
+        #'NAME': BASE_DIR / 'db.sqlite3',
+
+        # PostgreSQL database
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': decouple_config('POSTGRESQL_NAME'),
+        'USER': decouple_config('POSTGRESQL_USER'),
+        'PASSWORD': decouple_config('POSTGRESQL_PASSWORD'),
+        'HOST': decouple_config('POSTGRESQL_HOST'),
+        'PORT': decouple_config('POSTGRESQL_PORT', cast=int)
     }
 }
 
