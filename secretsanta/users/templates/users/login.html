@@ -6,7 +6,8 @@
         <div>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {% load crispy_forms_tags %}
+                {{ form|crispy }}
                 <button type="submit">Sign In</button>
 
             </form>
