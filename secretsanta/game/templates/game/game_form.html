@@ -5,7 +5,8 @@
     <div>
         <form id="game-form" method='POST'>
             {% csrf_token %}
-            {{ game_form.as_p }}
+            {% load crispy_forms_tags %}
+            {{ game_form|crispy }}
             {{ player_formset.management_form }}
             <div id='add-player-form'>
                 {% for form in player_formset %}

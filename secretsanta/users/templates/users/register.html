@@ -4,11 +4,12 @@
     <div>
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% load crispy_forms_tags %}
+            {{ form|crispy }}
             <button type="submit">Sign Up</button>
         </form>
         <div>
-            Already have an account? <a href="#">Sign In</a>
+            Already have an account? <a href="{% url 'login' %}">Sign In</a>
         </div>
     </div>
 {% endblock content %}
