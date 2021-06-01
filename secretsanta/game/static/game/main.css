@@ -5,3 +5,15 @@ body {
 .display-none {
 	display: none;
 }
+
+main {
+	/*height: 100vh;*/
+}
+
+.navbar {
+	background-color: #fc032c;
+}
+
+.georgia-font {
+	font-family: georgia;
+}
