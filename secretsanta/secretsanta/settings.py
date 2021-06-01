@@ -13,11 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
-################################
-import django_heroku
-django_heroku.settings(locals())
-################################
-
 # For hiding sensitive info on GitHub; senstive info enclosed in decouple_config()
 from decouple import config as decouple_config, Csv
 
