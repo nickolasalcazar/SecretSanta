@@ -27,7 +27,8 @@ SECRET_KEY = decouple_config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = decouple_config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['0.0.0.0']
+#ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
 
 # Application definition
 # Remember to always add new apps here
