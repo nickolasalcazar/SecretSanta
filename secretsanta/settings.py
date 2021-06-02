@@ -22,14 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-SECRET_KEY = decouple_config('SECRET_KEY')
+#SECRET_KEY = decouple_config('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = decouple_config('DEBUG', default=False, cast=bool)
+#DEBUG = decouple_config('DEBUG', default=False, cast=bool)
+DEBUG = os.getenv('DEBUG')
 
-#ALLOWED_HOSTS = ['0.0.0.0']
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0']
 #ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
+#ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
+
 
 # Application definition
 # Remember to always add new apps here
@@ -81,16 +84,23 @@ WSGI_APPLICATION = 'secretsanta.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 DATABASES = {
     'default': {
+        # Default database
         #'ENGINE': 'django.db.backends.sqlite3'
         #'NAME': BASE_DIR / 'db.sqlite3',
 
         # PostgreSQL database
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': decouple_config('POSTGRESQL_NAME'),
-        'USER': decouple_config('POSTGRESQL_USER'),
-        'PASSWORD': decouple_config('POSTGRESQL_PASSWORD'),
-        'HOST': decouple_config('POSTGRESQL_HOST'),
-        'PORT': decouple_config('POSTGRESQL_PORT', cast=int)
+        # 'NAME': decouple_config('POSTGRESQL_NAME'),
+        # 'USER': decouple_config('POSTGRESQL_USER'),
+        # 'PASSWORD': decouple_config('POSTGRESQL_PASSWORD'),
+        # 'HOST': decouple_config('POSTGRESQL_HOST'),
+        # 'PORT': decouple_config('POSTGRESQL_PORT', cast=int)
+
+        'NAME': os.getenv('POSTGRESQL_NAME'),
+        'USER': os.getenv('POSTGRESQL_USER'),
+        'PASSWORD': os.getenv('POSTGRESQL_PASSWORD'),
+        'HOST': os.getenv('POSTGRESQL_HOST'),
+        'PORT': os.getenv('POSTGRESQL_PORT')
     }
 }
 
@@ -133,11 +143,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Email Settings ###################################################
-EMAIL_USE_TLS = True                                # Encryption / security protocol
-EMAIL_HOST = decouple_config('EMAIL_HOST')          # The service we are using to handle our emails
-EMAIL_PORT = decouple_config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = decouple_config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = decouple_config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+# EMAIL_HOST = decouple_config('EMAIL_HOST')
+# EMAIL_PORT = decouple_config('EMAIL_PORT', cast=int)
+# EMAIL_HOST_USER = decouple_config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = decouple_config('EMAIL_HOST_PASSWORD')
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 ####################################################################
 
 LOGIN_REDIRECT_URL = 'game-home'
