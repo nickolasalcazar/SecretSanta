@@ -30,8 +30,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 #ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
-#ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0']
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
+#ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')] # For Heroku
 
 
 # Application definition
