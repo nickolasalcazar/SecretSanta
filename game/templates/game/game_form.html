@@ -10,7 +10,7 @@
             {{ player_formset.management_form|crispy }}     <!-- Player form -->
             <div id='add-player-form'>
                 {% for form in player_formset %}
-                    <div class='add-player-row'>
+                    <div class='add-player-row mt-2'>
 
                         {{ form }}
 
@@ -18,8 +18,7 @@
                             {{ hidden }}
                         {% endfor %}
 
-
-                        <button class="rmv-player-btn">Remove</button>
+                        <button class="rmv-player-btn btn btn-light">Remove</button>
                     </div>
                 {% endfor %}
             </div>
@@ -29,8 +28,8 @@
                     <li id="min-player-msg">Minimum of 4 participants required</li>
                 </ul>
             </div>
-            <button id='add-player-btn'>Add player</button>
-            <button id='submit-game-btn'  type='submit'>{{ action_title }} Game</button>
+            <button id='add-player-btn' class="btn btn-light">Add player</button>
+            <button id='submit-game-btn' type='submit' class="btn btn-primary">{{ action_title }} Game</button>
         </form>
     </div>
 
