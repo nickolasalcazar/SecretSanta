@@ -1,29 +1,28 @@
 {% extends "game/base.html" %}
 {% load static %}
 {% block content %}
-	<h1>Game Title</h1>
     <div>
-    	<h3>{{ object.title }}</h3>
+    	<h2>{{ object.title }}</h2>
     	<p>Host: {{ object.host }}</p>
 
     	<h4>Players</h4>
-    	<ul id="player-list">
+    	<ul id="player-list" class="list-group">
 	    	{% for player in object.player_set.all %}
-	    		<li>
-                    <div>
-                        {{ player.name }} 
+	    		<li class="list-group-item">
+                    <div class="mt-2">
+                        {{ player.name }}
                         <span class="recipient-info display-none">➨ 
                             {{ player.recipient.name }} 
                         </span>
-                        <button class="rvl-recipient-btn">Reveal Recipient</button>
+                        <button class="rvl-recipient-btn btn btn-info btn-sm badge badge-primary float-right">Reveal Recipient</button>
                     </div>
                 </li>
 	    	{% endfor %}
     	</ul>
-    	<div>
-            <a href="{% url 'game-notify-players' game.id %}">Notify Players</a>
-	    	<a href="{% url 'game-update' game.id %}">Edit</a>
-	    	<a href="{% url 'game-delete' object.id %}">Delete Game</a>
+    	<div class="mt-4">
+	    	<a href="{% url 'game-update' game.id %}" class="btn btn-primary">Edit</a>
+	    	<a href="{% url 'game-delete' object.id %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'game-notify-players' game.id %}" class="btn btn-light">Notify Players</a>
     	</div>
     </div>
     <script src="{% static 'game/game_detail_view.js' %}"></script>
