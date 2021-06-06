@@ -1,7 +1,22 @@
 {% extends "game/base.html" %}
 {% block content %}
-    <h3>Generate a game of Secret Santa</h3>
-    <p>
-        Welcome to the Secret Santa generator! Bring some friends together and create a game of Secret Santa!
-    </p>
+	<div class="container">
+	    <p class="mt-2">
+	        Welcome to the Secret Santa game generator! Generate a Secret Santa game with a roster of friends.
+	    </p>
+	</div>
+	<div class="container">
+		<h5>Generate a game</h5>
+		<div class="row">
+			{% if user.is_authenticated %}
+				<p>Signed in</p>
+			{% else %}
+				<p>Display form</p>
+			{% endif %}
+
+
+
+
+		</div>
+	</div>
 {% endblock content %}

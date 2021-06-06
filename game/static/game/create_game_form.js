@@ -128,4 +128,8 @@ function attachOnInputListeners() {
     for (let form of player_form_rows) form.querySelector('input').oninput = validateForm;
 }
 
-
+/* Hide checkboxes */
+for (let form of player_form_rows) {
+    form.querySelector('input[type=checkbox]').style.display = 'none';
+    form.querySelectorAll('label')[2].style.display = 'none';
+}

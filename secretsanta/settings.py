@@ -30,8 +30,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 #ALLOWED_HOSTS = decouple_config('ALLOWED_HOSTS', cast=Csv())
-#ALLOWED_HOSTS = ['0.0.0.0']
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')] # For Heroku
+ALLOWED_HOSTS = ['0.0.0.0']
+#ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')] # For Heroku
 
 
 # Application definition
@@ -44,10 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Apps
     'game.apps.GameConfig',
     'users.apps.UsersConfig',
+
+    # Third party
     'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

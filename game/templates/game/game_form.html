@@ -6,14 +6,13 @@
         <form id="game-form" method='POST'>
             {% csrf_token %}
             {% load crispy_forms_tags %}
-            {{ game_form|crispy }}
-            {{ player_formset.management_form }}
+            {{ game_form|crispy }}                          <!-- Game form -->
+            {{ player_formset.management_form|crispy }}     <!-- Player form -->
             <div id='add-player-form'>
                 {% for form in player_formset %}
                     <div class='add-player-row'>
-                        Name: {{ form.name }}
 
-                        Email: {{ form.email }}
+                        {{ form }}
 
                         {% for hidden in form.hidden_fields %}
                             {{ hidden }}
@@ -21,7 +20,6 @@
 
 
                         <button class="rmv-player-btn">Remove</button>
-                        <span class="display-none">{{ form.DELETE }}</span>
                     </div>
                 {% endfor %}
             </div>
