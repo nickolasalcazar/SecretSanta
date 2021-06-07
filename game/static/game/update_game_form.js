@@ -53,13 +53,11 @@ game_form.addEventListener('click', function(event) {
 
         if (!canDeleteRow(event.target)) return;
         
-        parentForm = event.target.parentElement;
+        parentForm = event.target.parentElement.parentElement.parentElement;
 
         // Reset 'name' and 'email' fields before removal
-        event.target.parentElement.querySelectorAll('input')[0].value = '';
-        event.target.parentElement.querySelectorAll('input')[1].value = '';
-
-        console.log(event.target.parentElement.querySelectorAll('input')[0].value = '')
+        event.target.parentElement.parentElement.parentElement.querySelectorAll('input')[0].value = '';
+        event.target.parentElement.parentElement.parentElement.querySelectorAll('input')[1].value = '';
 
         // Mark form for deletion
         parentForm.querySelector('input[type=checkbox]').checked = true;

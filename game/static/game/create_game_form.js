@@ -1,6 +1,6 @@
 // JS for templates/game/game_form.html
 console.log('game/create_game_form.js');
-console.log('cached 0')
+console.log('cached 1')
 
 const add_player_btn = document.querySelector('#add-player-btn');
 
@@ -53,11 +53,11 @@ game_form.addEventListener('click', function(event) {
 
         if (!canDeleteRow(event.target)) return;
         
-        parentForm = event.target.parentElement;
+        parentForm = event.target.parentElement.parentElement.parentElement;
 
         // Reset 'name' and 'email' fields before removal
-        event.target.parentElement.querySelectorAll('input')[0].value = '';
-        event.target.parentElement.querySelectorAll('input')[1].value = '';
+        event.target.parentElement.parentElement.parentElement.querySelectorAll('input')[0].value = '';
+        event.target.parentElement.parentElement.parentElement.querySelectorAll('input')[1].value = '';
         
         parentForm.style.display = 'none';
     }
