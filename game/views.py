@@ -22,7 +22,7 @@ from django.views.generic import (
 )
 
 from django.contrib.auth.models import User
-from .models import Game, Player
+from .models import Game, Player, games_count, player_count_avg
 
 from django.forms.models import inlineformset_factory
 
@@ -36,7 +36,7 @@ from django.core.mail import send_mail
     Function-based view for the home page of the site.
 '''
 def home(request):
-    context = { }
+    context = { 'games_count': games_count, 'player_count_avg': player_count_avg }
     return render(request, 'game/home.html', context)
 
 '''

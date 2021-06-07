@@ -47,11 +47,9 @@ class Player(models.Model):
 		else:
 			super(Player, self).save(*args, **kwargs)
 
+games_count = Game.objects.count()
 
-
-
-
-
+player_count_avg = round(Player.objects.count() / games_count, 1)
 
 
 
