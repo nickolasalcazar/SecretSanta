@@ -21,7 +21,7 @@
                             </div>
 
                             {% if 'Update' == action_title %}
-                            {{ form.DELETE|as_crispy_field }}
+                            <span style="display: none">{{ form.DELETE|as_crispy_field }}</span>
                             {% endif %}
 
                             {% for hidden in form.hidden_fields %}
@@ -34,11 +34,9 @@
                     </li>
                 {% endfor %}
             </ul>
-            <div>
-                <ul id="criteria-list">
-                    <li id="odd-player-msg">Even number of participants required</li>
-                    <li id="min-player-msg">Minimum of 4 participants required</li>
-                </ul>
+            <div id="criteria-list" class="mt-3">
+                <div id="odd-player-msg" class="alert alert-info">Even number of participants required</div>
+                <div id="min-player-msg" class="alert alert-info">Minimum of 4 participants required</div>
             </div>
             <button id='add-player-btn' class="btn btn-light">Add player</button>
             <button id='submit-game-btn' type='submit' class="btn btn-primary">{{ action_title }} Game</button>
