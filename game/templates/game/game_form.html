@@ -6,22 +6,34 @@
         <form id="game-form" method='POST'>
             {% csrf_token %}
             {% load crispy_forms_tags %}
-            {{ game_form|crispy }}                          <!-- Game form -->
-            {{ player_formset.management_form|crispy }}     <!-- Player form -->
-            <div id='add-player-form'>
+            <div style="max-width: 26em;">{{ game_form|crispy }}</div>
+            <p>Players</p>
+            {{ player_formset.management_form|crispy }}
+            <ul id='add-player-form' class='list-group'>
                 {% for form in player_formset %}
-                    <div class='add-player-row mt-2'>
+                    <li class='add-player-row list-group-item'>
+                        <div class="form-row">
+                            <div class="form-group col-md-5" style="max-height: 4em;">
+                                {{ form.name|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-5" style="max-height: 4em;">
+                                {{ form.email|as_crispy_field }}
+                            </div>
 
-                        {{ form }}
+                            {% if 'Update' == action_title %}
+                            {{ form.DELETE|as_crispy_field }}
+                            {% endif %}
 
-                        {% for hidden in form.hidden_fields %}
-                            {{ hidden }}
-                        {% endfor %}
-
-                        <button class="rmv-player-btn btn btn-light">Remove</button>
-                    </div>
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                            <div class="form group col-md-2">
+                                <button class="rmv-player-btn btn btn-primary float-bottom" style="margin-top: 2em;">Remove</button>
+                            </div>
+                        </div>
+                    </li>
                 {% endfor %}
-            </div>
+            </ul>
             <div>
                 <ul id="criteria-list">
                     <li id="odd-player-msg">Even number of participants required</li>
