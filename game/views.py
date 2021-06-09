@@ -181,10 +181,7 @@ class GameDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 '''
     View for displaying the Players that will be notified via email,
-    information regarding this feature,
-    and, possibly, a ReCAPTCHA for preventing abuse.
-
-    ! IMPLEMENT LOGIN REQUIRED !
+    with a confirmation button.
 '''
 def notifyPlayersView(request, pk):
     game = Game.objects.get(pk=pk)
@@ -192,18 +189,14 @@ def notifyPlayersView(request, pk):
     # If User is not host of game, redirect them to homepage
     if game.host != request.user: return redirect('game-home')
 
-    # I am assuming this the appropriate way to handle a confirmation buttom
+    # Assuming this is the appropriate way to handle a confirmation buttom
     if request.method == 'POST':
-
         recaptcha_response = request.POST.get('g-recaptcha-response')
         url = 'https://www.google.com/recaptcha/api/siteverify'
         values = {
             'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
             'response': recaptcha_response
         }
-
-        print("settings.GOOGLE_RECAPTCHA_SECRET_KEY = ",
-            settings.GOOGLE_RECAPTCHA_SECRET_KEY)
 
         data = urllib.parse.urlencode(values).encode()
         req =  urllib.request.Request(url, data=data)
@@ -212,7 +205,6 @@ def notifyPlayersView(request, pk):
 
         # reCAPTCHA success
         if result['success']:
-            
             players = game.player_set.all()
             playerCount = len(players)
             for player in players:
@@ -249,6 +241,7 @@ def notifyPlayersView(request, pk):
             messages.success(request, 'Players successfully notifed via email.')
             return redirect('game-detail', pk)
         else:
+            # reCAPTCHA fail
             messages.error(request, 'Invalid reCAPTCHA. Please try again.')
 
     context = {
@@ -258,14 +251,13 @@ def notifyPlayersView(request, pk):
 
     return render(request, 'game/notify_players.html', context)
 
-
 '''
     Randomly assigns each Player a distinct recipient.
     Performance is contingent on game having an even number of Players.
     Throws an exception if game has odd number of Players.
 
-    Current implementation is pretty jank: every time an infinite loop 
-    is detected, it keeps trying again.
+    Current implementation is not efficient: every time an infinite loop 
+    is detected, it keeps trying again until the function can complete.
 '''
 def assignPairs(game):
     players = game.player_set.all()
