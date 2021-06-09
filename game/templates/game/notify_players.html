@@ -21,7 +21,7 @@
 				{% csrf_token %}
 				<!-- reCAPTCHA v2 -->
 				<script src='https://www.google.com/recaptcha/api.js'></script>
-				<div class="g-recaptcha" data-sitekey="6LfZax8bAAAAAOQDTSHCM8T4sh8GGs5H5k97meiH"></div>
+				<div class="g-recaptcha" data-sitekey="{{ reCAPTCHA_site_key }}"></div>
 	    		<input type="submit" value="Notify players via email">
 	    	</form>
 		</div>

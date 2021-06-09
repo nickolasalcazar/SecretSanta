@@ -214,8 +214,7 @@ def notifyPlayersView(request, pk):
         print('result[] = ', result)
         print('result[success] = ', result['success'])
 
-        #if result['success']:
-        if True:
+        if result['success']:
             print('reCAPTCHA - success')
             players = game.player_set.all()
             playerCount = len(players)
@@ -256,57 +255,10 @@ def notifyPlayersView(request, pk):
             return redirect('game-detail', pk)
         else:
             messages.error(request, 'Invalid reCAPTCHA. Please try again.')
-        
-        
-
-        # reCAPTCHA fail
-        
-
-        '''
-        players = game.player_set.all()
-        playerCount = len(players)
-        for player in players:
-            player_list_string = ''
-            if player.email:
-                for i in range(playerCount):
-                    if player == players[i]:
-                        if (i == playerCount-1): 
-                            player_list_string += 'and ' + players[i].name + ' (you!)'
-                            break
-                        else:
-                            player_list_string += players[i].name + ' (you!), '
-                    else:
-                        if i == playerCount-1: 
-                            player_list_string += 'and ' + players[i].name
-                            break
-                        player_list_string += players[i].name + ', '
-
-                print('Emailing ', player.name, ' at ', player.email)
-                send_mail(
-                    # subject
-                    'Secret Santa Bot - Check your recipient here! 👈🎄☃️',
-
-                    # message body
-                    f'Hi {player.name}!\n\n{game.host.first_name} {game.host.last_name} invites you to a game of Secret Santa. '
-                    + 'This Secret Santa game includes ' + player_list_string + '. Hopefully you know them!'
-
-                    + f'\n\nAs a secret Santa, your recipient is {player.recipient.name}! What are you going to get them?'
-
-                    + '\nWho is your secret Santa?\n\nHappy gifting!\nSecret Santa Bot :-)',
-                    # from email
-                    'secret-santa@mailgun.nalcazar.com',
-                    # recipient, recipient list
-                    [player.email]
-                    )
-
-            else: print('Email invalid for ', player.name, ', email =', player.email)
-
-        messages.success(request, 'Players notifed via email.')
-        return redirect('game-detail', pk)
-        '''
 
     context = {
         'game': game,
+        'reCAPTCHA_site_key': settings.GOOGLE_RECAPTCHA_SITE_KEY
     }
 
     return render(request, 'game/notify_players.html', context)
