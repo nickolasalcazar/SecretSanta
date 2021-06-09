@@ -16,7 +16,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your account as been created, {username}')
+            messages.success(request, f'Your account as been created, {username}.')
 
             return redirect('login')
     else:
@@ -40,7 +40,7 @@ def profile(request):
             u_form.save()
             #p_form.save()
 
-            messages.success(request, 'Account has been updated')
+            messages.success(request, 'Account has been updated.')
             return redirect('profile') # Reload the page
     else:
         # Else create forms that do not pass data
