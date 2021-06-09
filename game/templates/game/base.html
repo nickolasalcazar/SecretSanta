@@ -57,6 +57,16 @@
       </div>
     </nav>
     <main role="main" class="container mt-2">
+        <div>
+            <!-- Messages -->
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                <div class="alert alert-danger">{{ message }}</div>
+                {% else %}
+                <div class="alert alert-success">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
         <div style="min-height: 75vh;">
         {% block content %}
         <!-- block content goes here -->

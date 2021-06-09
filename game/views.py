@@ -211,11 +211,8 @@ def notifyPlayersView(request, pk):
         result = json.loads(response.read().decode())
 
         # reCAPTCHA success
-        print('result[] = ', result)
-        print('result[success] = ', result['success'])
-
         if result['success']:
-            print('reCAPTCHA - success')
+            
             players = game.player_set.all()
             playerCount = len(players)
             for player in players:
@@ -233,8 +230,6 @@ def notifyPlayersView(request, pk):
                                 player_list_string += 'and ' + players[i].name
                                 break
                             player_list_string += players[i].name + ', '
-
-                    print('Emailing ', player.name, ' at ', player.email)
                     send_mail(
                         # subject
                         'Secret Santa Bot - Check your recipient here! 👈🎄☃️',
@@ -251,7 +246,7 @@ def notifyPlayersView(request, pk):
                         # recipient, recipient list
                         [player.email])
 
-            messages.success(request, 'Players notifed via email')
+            messages.success(request, 'Players successfully notifed via email.')
             return redirect('game-detail', pk)
         else:
             messages.error(request, 'Invalid reCAPTCHA. Please try again.')
