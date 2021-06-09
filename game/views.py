@@ -29,8 +29,20 @@ from django.forms.models import inlineformset_factory
 from django.urls import reverse
 
 import secrets
+import urllib.request, urllib.parse
+import json
 
 from django.core.mail import send_mail
+
+from django.conf import settings
+
+#####################################################################
+# TEMPORARY -- SECURITY RISK!
+# Prevents "SSL: CERTIFICATE_VERIFY_FAILED error" for reCAPTCHA check
+# Solution: use https:// and obtain SSL certificate
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+#####################################################################
 
 '''
     Function-based view for the home page of the site.
@@ -182,6 +194,75 @@ def notifyPlayersView(request, pk):
 
     # I am assuming this the appropriate way to handle a confirmation buttom
     if request.method == 'POST':
+
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        url = 'https://www.google.com/recaptcha/api/siteverify'
+        values = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+
+        print("settings.GOOGLE_RECAPTCHA_SECRET_KEY = ",
+            settings.GOOGLE_RECAPTCHA_SECRET_KEY)
+
+        data = urllib.parse.urlencode(values).encode()
+        req =  urllib.request.Request(url, data=data)
+        response = urllib.request.urlopen(req)
+        result = json.loads(response.read().decode())
+
+        # reCAPTCHA success
+        print('result[] = ', result)
+        print('result[success] = ', result['success'])
+
+        #if result['success']:
+        if True:
+            print('reCAPTCHA - success')
+            players = game.player_set.all()
+            playerCount = len(players)
+            for player in players:
+                player_list_string = ''
+                if player.email:
+                    for i in range(playerCount):
+                        if player == players[i]:
+                            if (i == playerCount-1): 
+                                player_list_string += 'and ' + players[i].name + ' (you!)'
+                                break
+                            else:
+                                player_list_string += players[i].name + ' (you!), '
+                        else:
+                            if i == playerCount-1: 
+                                player_list_string += 'and ' + players[i].name
+                                break
+                            player_list_string += players[i].name + ', '
+
+                    print('Emailing ', player.name, ' at ', player.email)
+                    send_mail(
+                        # subject
+                        'Secret Santa Bot - Check your recipient here! 👈🎄☃️',
+
+                        # message body
+                        f'Hi {player.name}!\n\n{game.host.first_name} {game.host.last_name} invites you to a game of Secret Santa. '
+                        + 'This Secret Santa game includes ' + player_list_string + '. Hopefully you know them!'
+                        + f'\n\nAs a secret Santa, your recipient is {player.recipient.name}! What are you going to get them?'
+                        + '\nWho is your secret Santa?\n\nHappy gifting!\nSecret Santa Bot :-)',
+                        
+                        # from email
+                        'secret-santa@mailgun.nalcazar.com',
+
+                        # recipient, recipient list
+                        [player.email])
+
+            messages.success(request, 'Players notifed via email')
+            return redirect('game-detail', pk)
+        else:
+            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        
+        
+
+        # reCAPTCHA fail
+        
+
+        '''
         players = game.player_set.all()
         playerCount = len(players)
         for player in players:
@@ -218,12 +299,11 @@ def notifyPlayersView(request, pk):
                     [player.email]
                     )
 
-
             else: print('Email invalid for ', player.name, ', email =', player.email)
-
 
         messages.success(request, 'Players notifed via email.')
         return redirect('game-detail', pk)
+        '''
 
     context = {
         'game': game,
