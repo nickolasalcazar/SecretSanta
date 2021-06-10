@@ -4,8 +4,13 @@
     <div class="container mt-3">
     	<ul class="list-group">
     	{% for game in user.game_set.all %}
-    		<li class="list-group-item" style="max-width: 26em;">
+    		<li class="list-group-item" style="/*max-width: 26em;*/">
     			<a href="{% url 'game-detail' game.id %}">{{ game.title }}</a>
+                <span class="float-right">
+                <a href="{% url 'game-update' game.id %}" class="btn-sm btn-primary">Edit</a>
+                <a href="{% url 'game-delete' game.id %}" class="btn-sm btn-danger">Delete</a>
+                <a href="{% url 'game-notify-players' game.id %}" class="btn-sm btn-light">Notify Players</a>
+                </span>
     		</li>
     	{% endfor %}
     	</ul>
