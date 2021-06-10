@@ -1,11 +1,11 @@
 {% extends "game/base.html" %}
 {% block content %}
-    <h4 class="mt-3">Welcome to the Secret Santa game generator!</h4>
+    <h4 class="mt-3">Welcome to the Secret Santa generator!</h4>
 	<div class="container">
 		<div class="container">
 			<ul class="list-group" style="/*list-style: none*/">
 				<li>Generate Secret Santa games virtually</li>
-				<li>Notify participants through email while keeping gifters a secret</li>
+				<li>Notify friends with email while keeping gifters a secret</li>
 				<li>Save and edit games for later</li>
 			</ul>
 		</div>
@@ -31,10 +31,10 @@
 	</div>
 	{% endif %}
 	
-	<h4 class="mt-3">Stats</h4>
+	<h4 class="mt-3">Site Statistics</h4>
 	<div class="container">
 		<div>
-			Number of games created: {{ games_count }}
+			Total number of games created: {{ games_count }}
 			<br>
 			Average number of players in a game: {{ player_count_avg }}
 		</div>

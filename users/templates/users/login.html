@@ -1,18 +1,16 @@
 {% extends "game/base.html" %}
 {% block content %}
-    <h1>Log In</h1>
+    <h3>Log In</h3>
     <div>
-        <!-- The "Crispy Forms" framework can be used to style this form along with Bootstrap -->
         <div>
             <form method="POST">
                 {% csrf_token %}
                 {% load crispy_forms_tags %}
                 {{ form|crispy }}
-                <button type="submit">Sign In</button>
-
+                <button class="btn btn-primary" type="submit">Sign In</button>
             </form>
         </div>
-        <div>
+        <div class="mt-2">
             Need an account? <a href="{% url 'register' %}">Sign Up</a>
         </div>
     </div>
