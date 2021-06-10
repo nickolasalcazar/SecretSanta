@@ -1,28 +1,37 @@
 {% extends "game/base.html" %}
 {% block content %}
-	<h1>Notify Players</h1>
+	<h2>Notify Players</h2>
 	<div>
-		<h3>Title: {{ game.title }}</h3>
+		<h3>Game: {{ game.title }}</h3>
 		<p>
 			The participants listed below may be notified via email of whome their Secret Santa recipient is.
 			Please verify the correctness of the following addresses before notifying particpiants.
 			Participants who are not listed below do not have a valid email.
 		</p>
-		<div>
+		<div class="container">
+			<ul class="list-group">
 			{% for player in game.player_set.all %}
     			{% if player.email %}
-    				<li> {{ player.name }} - {{ player.email }} </li>
+    				<li class="list-group-item"> 
+
+
+    					<span>{{ player.name }}</span>
+    					<span class="float-right" style="color: #0275d8">{{ player.email }}</span>
+    				</li>
     			{% endif %}
 		    {% endfor %}
+			</ul>
+			<div class="container mt-2">
+				<a href="{% url 'game-update' game.id %}">Edit Game</a>
+			</div>
 		</div>
-		<div>
-			<a href="{% url 'game-update' game.id %}">Edit Game</a>
+		<div class="container mt-3">
 			<form method="POST">
 				{% csrf_token %}
 				<!-- reCAPTCHA v2 -->
 				<script src='https://www.google.com/recaptcha/api.js'></script>
 				<div class="g-recaptcha" data-sitekey="{{ reCAPTCHA_site_key }}"></div>
-	    		<input type="submit" value="Notify players via email">
+    			<input class="mt-3 btn btn-primary" type="submit" value="Notify players via email">
 	    	</form>
 		</div>
     </div>
