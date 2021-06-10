@@ -1,12 +1,12 @@
 {% extends "game/base.html" %}
 {% block content %}
-	<h1>Confirm Deletion</h1>
-    <div>
+	<h3>Confirm Deletion</h3>
+    <div class="container">
 		<form method="POST">
 			{% csrf_token %} <!-- required for forms -->
-			<h3>Are you sure you want to delete the game "{{ object.title }}"?</h2>
-			<button type="submit">Yes, delete</button>
-			<a href="{% url 'game-detail' object.id %}">Cancel</a>
+			<h6>Are you sure you want to permanently delete the game "<span style="color: #0275d8">{{ object.title }}</span>"?</h6>
+			<button class="btn btn-danger" type="submit">Yes, delete</button>
+			<a class="btn btn-primary" href="{% url 'game-detail' object.id %}">Cancel</a>
 		</form>
 	</div>
 {% endblock content %}

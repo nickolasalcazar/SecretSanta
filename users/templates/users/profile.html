@@ -2,19 +2,14 @@
 {% block content %}
     <div class="content-section">
       <h2>Profile Info</h2>
-      <h3 class="account-heading">{{ user.username }}</h3>
+      <h3 class="account-heading" style="color: #0275d8">{{ user.username }}</h3>
       <p class="text-secondary">{{ user.email }}</p>
-
       <!-- enctype="multipart/form-data" is required for forms containing more than one form -->
       <form method="POST" enctype="multipart/form-data">
-        
-
-
         <div style="max-width: 26em;">
           {% csrf_token %} <!-- required for forms -->
           {% load crispy_forms_tags %}
           {{ u_form|crispy }} <!-- importing UserUpdateForm -->
-
           {{ p_form|crispy }} <!-- importing ProfileUpdateForm -->
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
